@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/Utils.dart';
+import 'graph.dart';
 
 class SideNavigatinPage extends StatefulWidget {
   var s = "", s1 = "", s2 = "", s3 = "";
@@ -206,7 +207,25 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                           height: 1.0,
                           color: Colors.grey,
                         ),
-
+                        ListTile(
+                          leading: Icon(Icons.bar_chart_outlined, color: Color(Utils
+                              .hexStringToHexInt('4285F4')),),
+                          title: const Text(' Revenue '),
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const Graph()),
+                            );
+                          },
+                          trailing: const Icon(Icons.keyboard_arrow_right),
+                        ),
+                        const Divider(
+                          height: 1.0,
+                          color: Colors.grey,
+                        ),
                         ListTile(
                           leading:  Icon(Icons.share,color:  Color(Utils.hexStringToHexInt('4285F4')),),
                           title: const Text(' Refer To Earm '),

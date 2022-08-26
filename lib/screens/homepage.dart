@@ -141,10 +141,10 @@ class _HomePageState extends State<HomePage> {
               return Container();
             } else {
               for (var i = 0;
-                  i < bookingController.element!.length;
+                  i < bookingController.element.length;
                   i++) {
                 _element
-                    .add(bookingController.element![i]);
+                    .add(bookingController.element[i]);
               }
               return SingleChildScrollView(
                 child: Column(
@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                                     Positioned(
                                       top: height * 0.01,
                                       child: Text(
-                                        '${bookingController.element!.length}',
+                                        '${bookingController.element.length}',
                                         style: TextStyle(
                                             fontFamily: 'Poppins Semibold',
                                             fontSize: MediaQuery.of(context)

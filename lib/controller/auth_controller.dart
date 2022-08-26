@@ -42,8 +42,8 @@ class AuthController extends GetxController {
     map = {
       "email": email,
       "password": password,
-      "device_token": "SDF SDF SDF SDF SD F",
-      "device_type": "$fcm_token"
+      "device_token": "$fcm_token",
+      "device_type": "andoird"
     };
     try {
       CommonDialog.showLoading(title: "Please waitt...");
