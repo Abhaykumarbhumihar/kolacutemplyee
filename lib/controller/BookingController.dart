@@ -140,7 +140,6 @@ class BookingController extends GetxController {
       CommonDialog.showLoading(title: "Please waitt...");
       final response = await APICall().registerUrse(map, AppConstant.GET_ALL_BOOKING);
       print(response);
-
       if (bookingPojo.value.message == "No Data found") {
         //   print(response);
         CommonDialog.hideLoading();

@@ -720,7 +720,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           },
-        );
+        )  ;
       },
       child: Container(
         width: width,
@@ -743,6 +743,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   width: width * 0.02,
                 ),
+
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -770,9 +771,10 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           fit: BoxFit.fitHeight)),
                                   child: Container(
-                                    padding: EdgeInsets.all(4.0),
+                                    padding: EdgeInsets.all(5.0),
                                     child: Text(
-                                      '${element.status == "Accepted" ? "Accepted" : "In Progress"}',
+                                      '${ element.status == "Accepted"?"In Progress " : element.status == "Pending"
+                                     ?"New Order ": element.status == "Completed"?"Completed ":"Rejected " }',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: width * 0.02,
@@ -800,6 +802,7 @@ class _HomePageState extends State<HomePage> {
                           //       ),
                           //     ))
 
+                          /*Show Button on condition on Status*/
                           element.status == "Accepted"
                               ? InkWell(
                             onTap: () async {
@@ -828,7 +831,7 @@ class _HomePageState extends State<HomePage> {
                                   bookingController
                                       .bookingPojo.value.slotDetail!
                                       .clear();
-                                  bookingController.getData();
+                                  bookingController.getBookingList(session);
                                 });
                               }
                             },
@@ -841,7 +844,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.cyan),
                               child: const Center(
                                 child: Text(
-                                  "Complete",
+                                  "Accepted",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 12),
                                 ),
@@ -869,16 +872,16 @@ class _HomePageState extends State<HomePage> {
                               print(response.body);
                               var data = response.body;
                               final body = json.decode(response.body);
-                              if (body['message'] ==
-                                  "Booking has been accepted successfully.") {
+                              if (body['message'] !=
+                                  "") {
                                 setState(() {
-                                  bookingController.element!
+                                  bookingController.element
                                       .clear();
                                   bookingController
                                       .bookingPojo.value.slotDetail!
                                       .clear();
 
-                                  bookingController.getData();
+                                  bookingController.getBookingList(session);
                                 });
                               }
                             },
@@ -899,7 +902,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           )
-                              : InkWell(
+                              : element.status == "Completed"?
+                                    InkWell(
                             onTap: () async {
                               //  bookingController.acceptBooking(element.id);
                               // Map map = {
@@ -936,7 +940,55 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.circular(6.0),
-                                  color: Colors.cyan),
+                                  color: Colors.lightGreen),
+                              child: Center(
+                                child: Text(
+                                  "Completed",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          ):
+                          InkWell(
+                            onTap: () async {
+                              //  bookingController.acceptBooking(element.id);
+                              // Map map = {
+                              //   "session_id": box.read('session'),
+                              //   "booking_id": element.id.toString()
+                              // };
+                              // print(map);
+                              // var apiUrl = Uri.parse(AppConstant.BASE_URL +
+                              //     AppConstant.ACCEPT_BOOKING);
+                              // print(apiUrl);
+                              // print(map);
+                              // final response = await http.post(
+                              //   apiUrl,
+                              //   body: map,
+                              // );
+                              // print(response.body);
+                              // var data = response.body;
+                              // final body = json.decode(response.body);
+                              // if (body['message'] ==
+                              //     "Booking has been accepted successfully.") {
+                              //   setState(() {
+                              //     bookingController.slotDetail!.clear();
+                              //     bookingController
+                              //         .bookingPojo.value.slotDetail!
+                              //         .clear();
+                              //
+                              //     bookingController.getBookingList();
+                              //   });
+                              // }
+                            },
+                            child: Container(
+                              width: width * 0.2,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(6.0),
+                                  color: Colors.red),
                               child: Center(
                                 child: Text(
                                   "Rejected",
@@ -950,6 +1002,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
+
                     Text(
                       'Visit on 24 Jun, 10:00 AM',
                       style: TextStyle(

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/Utils.dart';
 import 'graph.dart';
+import 'login.dart';
 
 class SideNavigatinPage extends StatefulWidget {
   var s = "", s1 = "", s2 = "", s3 = "";
@@ -182,8 +183,11 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                         ListTile(
                           leading:  Icon(Icons.calendar_today_outlined,color:  Color(Utils.hexStringToHexInt('4285F4')),),
                           title: const Text(' Leave '),
-                          onTap: () {
+                          onTap: () async{
                             Navigator.pop(context);
+                            SharedPreferences prefrences = await SharedPreferences.getInstance();
+                            await prefrences.remove("session");
+                            Get.off(LoginPage());
                           },
                           trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
