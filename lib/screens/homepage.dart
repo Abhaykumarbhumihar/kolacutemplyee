@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +9,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sticky_grouped_list/sticky_grouped_list.dart';
-
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import '../controller/BookingController.dart';
 import '../model/AllBookingPojoo.dart';
 import '../utils/Utils.dart';
+import '../utils/appconstant.dart';
 import 'allbooking.dart';
 import 'sidenavigation.dart';
 
@@ -29,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   var phone="";
   var iamge="";
   late SharedPreferences sharedPreferences;
-
+  var session="";
 
 
   @override
@@ -40,11 +44,13 @@ class _HomePageState extends State<HomePage> {
       var emailValue = sharedPreferences.getString("email");
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
+      var _session = sharedPreferences.getString('session');
       setState(() {
         name = _testValue!;
         email=emailValue!;
         phone=_phoneValue!;
         iamge=_imageValue!;
+        session=_session!;
       });
       // will be null if never previously saved
     //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -506,7 +512,13 @@ class _HomePageState extends State<HomePage> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Order detail of ${element.bookingId}"),
+                  Text(
+                    "Order detail of ${element.bookingId}",
+                    style: TextStyle(
+                        fontFamily: 'Poppins Regular',
+                        color: Colors.black,
+                        fontSize: width * 0.03),
+                  ),
                   IconButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -521,7 +533,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (BuildContext context, StateSetter setState) {
                   return Container(
                       width: width,
-                      height: height*0.5,
+                      height: height * 0.5,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -580,6 +592,85 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Text(
                                   "${element.date!.day}-${element.date!.month}-${element.date!.year}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Payment Mode",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text(
+                                  "${element.payment_type == null ? "" : element.payment_type}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Transaction id",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text("${element.transaction_id}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Coupon Code",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text(
+                                  "${element.coupon_code == null ? "N/A" : element.coupon_code}",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Color(
+                                          Utils.hexStringToHexInt('C4C4C4')),
+                                      fontSize: width * 0.03)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Coin ",
+                                style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(
+                                        Utils.hexStringToHexInt('C4C4C4')),
+                                    fontSize: width * 0.03),
+                              ),
+                              Text(
+                                  "${element.coin == null ? "N/A" : element.coin} (100 coins = ₹ 1)",
                                   style: TextStyle(
                                       fontFamily: 'Poppins Regular',
                                       color: Color(
@@ -691,23 +782,171 @@ class _HomePageState extends State<HomePage> {
                                   ))
                             ],
                           ),
-                          Visibility(
-                              visible:
-                                  element.status == "Accepted" ? false : true,
-                              child: Container(
-                                width: width * 0.2,
-                                height: 28,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6.0),
-                                    color: Colors.cyan),
-                                child: Center(
-                                  child: Text(
-                                    "Confirm",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  ),
+                          // Visibility(
+                          //     visible:
+                          //         element.status == "Accepted" ? false : true,
+                          //     child: Container(
+                          //       width: width * 0.2,
+                          //       height: 28,
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(6.0),
+                          //           color: Colors.cyan),
+                          //       child: Center(
+                          //         child: Text(
+                          //           "Confirm",
+                          //           style: TextStyle(
+                          //               color: Colors.white, fontSize: 12),
+                          //         ),
+                          //       ),
+                          //     ))
+
+                          element.status == "Accepted"
+                              ? InkWell(
+                            onTap: () async {
+                              // bookingController.acceptBooking(element.id);
+                              Map map = {
+                                "session_id":session,
+                                "booking_id": element.id.toString()
+                              };
+                              print(map);
+                              var apiUrl = Uri.parse(
+                                  AppConstant.BASE_URL +
+                                      AppConstant.COMPLETE_BOOKIND);
+                              print(apiUrl);
+                              print(map);
+                              final response = await http.post(
+                                apiUrl,
+                                body: map,
+                              );
+                              print(response.body);
+                              var data = response.body;
+                              final body = json.decode(response.body);
+                              if (body['message'] ==
+                                  "Booking has been completed successfully.") {
+                                setState(() {
+                                  bookingController.element.clear();
+                                  bookingController
+                                      .bookingPojo.value.slotDetail!
+                                      .clear();
+                                  bookingController.getData();
+                                });
+                              }
+                            },
+                            child: Container(
+                              width: width * 0.2,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(6.0),
+                                  color: Colors.cyan),
+                              child: const Center(
+                                child: Text(
+                                  "Complete",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
                                 ),
-                              ))
+                              ),
+                            ),
+                          )
+                              : element.status == "Pending"
+                              ? InkWell(
+                            onTap: () async {
+                              //  bookingController.acceptBooking(element.id);
+                              Map map = {
+                                "session_id": session,
+                                "booking_id": element.id.toString()
+                              };
+                              print(map);
+                              var apiUrl = Uri.parse(
+                                  AppConstant.BASE_URL +
+                                      AppConstant.ACCEPT_BOOKING);
+                              print(apiUrl);
+                              print(map);
+                              final response = await http.post(
+                                apiUrl,
+                                body: map,
+                              );
+                              print(response.body);
+                              var data = response.body;
+                              final body = json.decode(response.body);
+                              if (body['message'] ==
+                                  "Booking has been accepted successfully.") {
+                                setState(() {
+                                  bookingController.element!
+                                      .clear();
+                                  bookingController
+                                      .bookingPojo.value.slotDetail!
+                                      .clear();
+
+                                  bookingController.getData();
+                                });
+                              }
+                            },
+                            child: Container(
+                              width: width * 0.2,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(6.0),
+                                  color: Colors.cyan),
+                              child: Center(
+                                child: Text(
+                                  "Confirm",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () async {
+                              //  bookingController.acceptBooking(element.id);
+                              // Map map = {
+                              //   "session_id": box.read('session'),
+                              //   "booking_id": element.id.toString()
+                              // };
+                              // print(map);
+                              // var apiUrl = Uri.parse(AppConstant.BASE_URL +
+                              //     AppConstant.ACCEPT_BOOKING);
+                              // print(apiUrl);
+                              // print(map);
+                              // final response = await http.post(
+                              //   apiUrl,
+                              //   body: map,
+                              // );
+                              // print(response.body);
+                              // var data = response.body;
+                              // final body = json.decode(response.body);
+                              // if (body['message'] ==
+                              //     "Booking has been accepted successfully.") {
+                              //   setState(() {
+                              //     bookingController.slotDetail!.clear();
+                              //     bookingController
+                              //         .bookingPojo.value.slotDetail!
+                              //         .clear();
+                              //
+                              //     bookingController.getBookingList();
+                              //   });
+                              // }
+                            },
+                            child: Container(
+                              width: width * 0.2,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(6.0),
+                                  color: Colors.cyan),
+                              child: Center(
+                                child: Text(
+                                  "Rejected",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
