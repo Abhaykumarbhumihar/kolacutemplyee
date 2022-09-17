@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kolacut_employee/controller/BookingController.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import '../utils/Utils.dart';
 import 'dart:io';
@@ -22,6 +23,7 @@ class _GraphState extends State<Graph> {
     // TODO: implement initState
     super.initState();
   }
+  static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
   JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
     return JavascriptChannel(
@@ -36,7 +38,8 @@ class _GraphState extends State<Graph> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   BookingController bookingController = Get.put(BookingController());
-
+  List<OrdinalSales> losAngeles = [];
+  List<OrdinalSales> globalSalesData = [];
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -56,7 +59,7 @@ class _GraphState extends State<Graph> {
                 },
               ),
               title: Text(
-                'Revenue',
+                'Revenue ',
                 style: TextStyle(
                     fontFamily: 'Poppins Regular',
                     color: Colors.black,
@@ -68,6 +71,22 @@ class _GraphState extends State<Graph> {
                 if (dashboardController.lodaer) {
                   return Container();
                 } else {
+                  for (var i = 0;
+                  i < dashboardController.graphPojo.value.data!.length;
+                  i++)
+                  {
+                    dashboardController.graphPojo.value.data![i].completedOrder;
+                    dashboardController.graphPojo.value.data![i].totalOrder;
+                    globalSalesData.add(OrdinalSales(
+                        'JAIN$i',
+                        dashboardController
+                            .graphPojo.value.data![i].totalOrder!));
+                    losAngeles.add(OrdinalSales(
+                        'JAIN$i',
+                        dashboardController
+                            .graphPojo.value.data![i].completedOrder!));
+                    //OrdinalSales('JAIN',  dashboardController.graphPojo.value.data![i].completedOrder!);
+                  }
                   return Container(
                     width: width,
                     height: height,
@@ -78,7 +97,7 @@ class _GraphState extends State<Graph> {
                         ),
                         Center(
                           child: Text(
-                            'Total Revenie',
+                            'Total Revenue ',
                             style: TextStyle(
                                 fontFamily: 'Poppins Medium',
                                 fontSize:
@@ -253,50 +272,32 @@ class _GraphState extends State<Graph> {
                             ),
                           ),
                         ),
-                        Flexible(
-                          child: Container(
-                            width: width,
-                            height: height * 0.4,
-                            margin: EdgeInsets.all(6.0),
-                            child: Material(
-                              elevation: 6,
-                              child: Flexible(
-                                child: WebView(
-                                  initialUrl:
-                                      'http://kolacut.kvpscampuscare.com/public/employee_graph/87',
-                                  javascriptMode: JavascriptMode.disabled,
-                                  onWebViewCreated:
-                                      (WebViewController webViewController) {
-                                    _controller.complete(webViewController);
-                                  },
-                                  onProgress: (int progress) {
-                                    print(
-                                        'WebView is loading (progress : $progress%)');
-                                  },
-                                  javascriptChannels: <JavascriptChannel>{
-                                    _toasterJavascriptChannel(context),
-                                  },
-                                  navigationDelegate:
-                                      (NavigationRequest request) {
-                                    if (request.url.startsWith(
-                                        'https://www.youtube.com/')) {
-                                      print('blocking navigation to $request}');
-                                      return NavigationDecision.prevent;
-                                    }
-                                    print('allowing navigation to $request');
-                                    return NavigationDecision.navigate;
-                                  },
-                                  onPageStarted: (String url) {
-                                    print('Page started loading: $url');
-                                  },
-                                  onPageFinished: (String url) {
-                                    print('Page finished loading: $url');
-                                  },
-                                  gestureNavigationEnabled: true,
-                                  backgroundColor: const Color(0x00000000),
-                                ),
-                              ),
+                        Container(
+                          color: Colors.white70,
+                          width: width,
+                          height: height * 0.4,
+                          child: charts.BarChart(
+                            _createSampleData(),
+                            animate: true,
+                            //domainAxis: new charts.OrdinalAxisSpec(),
+                            domainAxis: const charts.OrdinalAxisSpec(
+                              renderSpec: charts.SmallTickRendererSpec(
+                                  labelRotation: 60),
                             ),
+                            animationDuration: Duration(seconds: 2),
+                            flipVerticalAxis: false,
+                            barGroupingType: charts.BarGroupingType.grouped,
+                            // It is important when using both primary and secondary axes to choose
+                            // the same number of ticks for both sides to get the gridlines to line
+                            // up.
+                            primaryMeasureAxis: const charts.NumericAxisSpec(
+                                tickProviderSpec:
+                                charts.BasicNumericTickProviderSpec(
+                                    desiredTickCount: 5)),
+                            secondaryMeasureAxis: const charts.NumericAxisSpec(
+                                tickProviderSpec:
+                                charts.BasicNumericTickProviderSpec(
+                                    desiredTickCount: 5)),
                           ),
                         )
                       ],
@@ -306,4 +307,37 @@ class _GraphState extends State<Graph> {
               },
             )));
   }
+
+  List<charts.Series<OrdinalSales, String>> _createSampleData() {
+    losAngeles;
+
+    globalSalesData;
+
+    return [
+      charts.Series<OrdinalSales, String>(
+        id: 'Global Revenue',
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+        data: globalSalesData,
+      ),
+      charts.Series<OrdinalSales, String>(
+        id: 'Los Angeles Revenue',
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+        data: losAngeles,
+      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId)
+      // Set the 'Los Angeles Revenue' series to use the secondary measure axis.
+      // All series that have this set will use the secondary measure axis.
+      // All other series will use the primary measure axis.
+    ];
+  }
+
+}
+
+
+class OrdinalSales {
+  final String year;
+  final int sales;
+
+  OrdinalSales(this.year, this.sales);
 }

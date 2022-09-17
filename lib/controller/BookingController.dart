@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/AcceptBookigPojo.dart';
 import '../model/AllBookingPojoo.dart';
+import '../model/Graphpojjo.dart';
 import '../services/ApiCall.dart';
 import '../utils/CommomDialog.dart';
 import '../utils/appconstant.dart';
@@ -17,6 +18,7 @@ class BookingController extends GetxController {
   List<SlotDetail> element = [];
   var acceptBookingPojo=AcceptBookigPojo().obs;
   late SharedPreferences sharedPreferences;
+  var graphPojo = Graphpojjo().obs;
   void getData()async{
     final prefs = await SharedPreferences.getInstance();
 
@@ -43,6 +45,7 @@ class BookingController extends GetxController {
       // will be null if never previously saved
      // print("SDFKLDFKDKLFKDLFKLDFKL  "+"${_testValue}");
       getBookingList(_testValue);
+      getChart();
     });
 
   }
@@ -128,6 +131,30 @@ class BookingController extends GetxController {
     } catch (error) {
       print(error);
 
+    }
+  }
+  void getChart() async {
+    Map map;
+    try {
+     // CommonDialog.showLoading(title: "Please waitt...");
+      final response =
+      await APICall().registerUrseWithoutbody("public/api/get-data");
+      print(response);
+      CommonDialog.hideLoading();
+      if (response != "null") {
+        // print("CODE IS RUNNING HERE");
+        graphPojo.value = graphpojjoFromJson(response);
+        update();
+      //  lodaer = false;
+      } else {
+        print("CODE IS RUNNING HERE");
+
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+      CommonDialog.hideLoading();
     }
   }
 

@@ -83,321 +83,315 @@ class _ApplyLeaveState extends State<ApplyLeave> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return SafeArea(
-        child: Container(
-      width: width,
-      height: height,
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: width * 0.06, top: 6.0),
-                child: Text(
-                  'Add a date',
-                  style: TextStyle(
-                      fontFamily: 'Poppins Regular',
-                      color: Color(Utils.hexStringToHexInt('8D8D8D')),
-                      fontSize: width * 0.04),
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              InkWell(
-                onTap: () async {
-                  await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2015),
-                    lastDate: DateTime(2025),
-                  ).then((selectedDate) {
-                    if (selectedDate != null) {
-                      setState(() {
-                        datee = DateFormat('dd').format(selectedDate);
-                        monthh = DateFormat('MM').format(selectedDate);
-                        yee = DateFormat('yyyy').format(selectedDate);
-                        print("${yee}-${monthh}-${datee}");
-                      });
-                    }
-                  });
-                },
-                child: Container(
-                  margin: EdgeInsets.only(left: width * 0.05),
-                  child: Row(
-                    children: <Widget>[
-                      Utils.applyLeavdd(datee, width, height, "dd"),
-                      SizedBox(
-                        width: 3.0,
-                      ),
-                      Utils.applyLeavdd(monthh, width, height, "MM"),
-                      SizedBox(
-                        width: 3.0,
-                      ),
-                      Utils.applyLeavdd(yee, width, height, "yyyy"),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: width * 0.06, top: 8.0),
-                child: Text(
-                  'Type of Holiday ',
-                  style: TextStyle(
-                      fontFamily: 'Poppins Regular',
-                      color: Color(Utils.hexStringToHexInt('8D8D8D')),
-                      fontSize: width * 0.04),
-                ),
-              ),
-              Container(
-                height: height * 0.1,
-                width: width,
-                child: Expanded(
-                  child: Row(
-                    children: typeofHolidayList
-                        .map((data) => Expanded(
-                              child: RadioListTile(
-                                title: Text(
-                                  "${data.name}",
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins Regular',
-                                      color: Color(
-                                          Utils.hexStringToHexInt('8D8D8D')),
-                                      fontSize: width * 0.03),
-                                ),
-                                groupValue: id,
-                                value: data.index,
-                                onChanged: (val) {
-                                  setState(() {
-                                    radioItem = data.name;
-                                    id = data.index;
-                                  });
-                                },
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: width * 0.06, top: 8.0),
-                child: Flexible(
-                  child: Text(
-                    'Store Operational Hours for Partial off ',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontFamily: 'Poppins Regular',
-                        color: Color(Utils.hexStringToHexInt('8D8D8D')),
-                        fontSize: width * 0.04),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              Row(
+        child: Scaffold(
+          body: Container(
+            width: width,
+            height: height,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(
-                        left: width * 0.06, right: width * 0.02),
+                    margin: EdgeInsets.only(left: width * 0.06, top: 6.0),
+                    child: Text(
+                      'Add a date',
+                      style: TextStyle(
+                          fontFamily: 'Poppins Regular',
+                          color: Color(Utils.hexStringToHexInt('8D8D8D')),
+                          fontSize: width * 0.04),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4.0,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2015),
+                        lastDate: DateTime(2025),
+                      ).then((selectedDate) {
+                        if (selectedDate != null) {
+                          setState(() {
+                            datee = DateFormat('dd').format(selectedDate);
+                            monthh = DateFormat('MM').format(selectedDate);
+                            yee = DateFormat('yyyy').format(selectedDate);
+                            print("${yee}-${monthh}-${datee}");
+                          });
+                        }
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: width * 0.05),
+                      child: Row(
+                        children: <Widget>[
+                          Utils.applyLeavdd(datee, width, height, "dd"),
+                          SizedBox(
+                            width: 3.0,
+                          ),
+                          Utils.applyLeavdd(monthh, width, height, "MM"),
+                          SizedBox(
+                            width: 3.0,
+                          ),
+                          Utils.applyLeavdd(yee, width, height, "yyyy"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: width * 0.06, top: 8.0),
+                    child: Text(
+                      'Type of Holiday ',
+                      style: TextStyle(
+                          fontFamily: 'Poppins Regular',
+                          color: Color(Utils.hexStringToHexInt('8D8D8D')),
+                          fontSize: width * 0.04),
+                    ),
+                  ),
+                  Container(
+                    height: height * 0.1,
+                    width: width,
                     child: Row(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            _selectTime(context);
+                      children: typeofHolidayList
+                          .map((data) => Expanded(
+                        child: RadioListTile(
+                          title: Text(
+                            "${data.name}",
+                            style: TextStyle(
+                                fontFamily: 'Poppins Regular',
+                                color: Color(
+                                    Utils.hexStringToHexInt('8D8D8D')),
+                                fontSize: width * 0.03),
+                          ),
+                          groupValue: id,
+                          value: data.index,
+                          onChanged: (val) {
+                            setState(() {
+                              radioItem = data.name;
+                              id = data.index;
+                            });
                           },
-                          child: Container(
-                            padding: EdgeInsets.all(width * 0.003),
-                            alignment: Alignment.center,
-                            width: width * 0.1 + width * 0.06,
-                            height: height * 0.05,
-                            margin: EdgeInsets.only(right: width * 0.01),
-                            decoration: BoxDecoration(
-                                color: Color(Utils.hexStringToHexInt('E5E5E5')),
-                                borderRadius: BorderRadius.circular(4)),
+                        ),
+                      ))
+                          .toList(),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: width * 0.06, top: 8.0),
+                    child: Text(
+                      'Store Operational Hours for Partial off ',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontFamily: 'Poppins Regular',
+                          color: Color(Utils.hexStringToHexInt('8D8D8D')),
+                          fontSize: width * 0.04),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4.0,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: width * 0.06, right: width * 0.02),
+                        child: Row(
+                          children: <Widget>[
+                            GestureDetector(
+                              onTap: () {
+                                _selectTime(context);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(width * 0.003),
+                                alignment: Alignment.center,
+                                width: width * 0.1 + width * 0.06,
+                                height: height * 0.05,
+                                margin: EdgeInsets.only(right: width * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Color(Utils.hexStringToHexInt('E5E5E5')),
+                                    borderRadius: BorderRadius.circular(4)),
+                                child: Text(
+                                  "${openingTime.hour}:${openingTime.minute}",
+                                  style: TextStyle(
+                                      fontSize: width * 0.02,
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins Regular'),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  'AM',
+                                  style: TextStyle(
+                                      color: openingTime.period
+                                          .toString()
+                                          .split('.')[1] ==
+                                          "am"
+                                          ? Color(Utils.hexStringToHexInt('46D0D9'))
+                                          : Colors.black,
+                                      fontFamily: 'Poppins Regular',
+                                      fontSize: width * 0.02),
+                                ),
+                                Text(
+                                  'PM',
+                                  style: TextStyle(
+                                      color: openingTime.period
+                                          .toString()
+                                          .split('.')[1] ==
+                                          "pm"
+                                          ? Colors.blueAccent
+                                          : Colors.black,
+                                      fontFamily: 'Poppins Regular',
+                                      fontSize: width * 0.02),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: width * 0.1,
+                        height: height * 0.02,
+                        child: Divider(
+                          thickness: 2,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: width * 0.02),
+                        child: Row(
+                          children: <Widget>[
+                            GestureDetector(
+                              onTap: () {
+                                _closingTime(context);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(width * 0.003),
+                                alignment: Alignment.center,
+                                width: width * 0.1 + width * 0.06,
+                                height: height * 0.05,
+                                margin: EdgeInsets.only(right: width * 0.01),
+                                decoration: BoxDecoration(
+                                    color: Color(Utils.hexStringToHexInt('E5E5E5')),
+                                    borderRadius: BorderRadius.circular(4)),
+                                child: Text(
+                                  "${closingTime.hour}:${closingTime.minute}",
+                                  style: TextStyle(
+                                      fontSize: width * 0.02,
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins Regular'),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  'AM',
+                                  style: TextStyle(
+                                      color: closingTime.period
+                                          .toString()
+                                          .split('.')[1] ==
+                                          "am"
+                                          ? Color(Utils.hexStringToHexInt('46D0D9'))
+                                          : Colors.black,
+                                      fontFamily: 'Poppins Regular',
+                                      fontSize: width * 0.02),
+                                ),
+                                Text(
+                                  'PM',
+                                  style: TextStyle(
+                                      color: closingTime.period
+                                          .toString()
+                                          .split('.')[1] ==
+                                          "pm"
+                                          ? Colors.blueAccent
+                                          : Colors.black,
+                                      fontFamily: 'Poppins Regular',
+                                      fontSize: width * 0.02),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: width * 0.08, top: 8.0),
+                    child: Text(
+                      'Reason of the Holiday  ',
+                      style: TextStyle(
+                          fontFamily: 'Poppins Regular',
+                          color: Color(Utils.hexStringToHexInt('8D8D8D')),
+                          fontSize: width * 0.04),
+                    ),
+                  ),
+                  Container(
+                    height: height * 0.3,
+                    child: Column(
+                      children: reasonOfHoliday
+                          .map((data) => Expanded(
+                        child: RadioListTile(
+                          title: Text(
+                            "${data.name}",
+                            style: TextStyle(
+                                fontFamily: 'Poppins Regular',
+                                color: Color(
+                                    Utils.hexStringToHexInt('8D8D8D')),
+                                fontSize: width * 0.03),
+                          ),
+                          groupValue: holidayid,
+                          value: data.index,
+                          onChanged: (val) {
+                            setState(() {
+                              holidayItem = data.name;
+                              holidayid = data.index;
+                            });
+                          },
+                        ),
+                      ))
+                          .toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      applyLeave();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: width * 0.4,
+                          height: height * 0.1 - height * 0.02,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(width * 0.05),
+                              color: Color(Utils.hexStringToHexInt('4285F4'))),
+                          child: Center(
                             child: Text(
-                              "${openingTime.hour}:${openingTime.minute}",
+                              'SAVE',
                               style: TextStyle(
-                                  fontSize: width * 0.02,
-                                  color: Colors.black,
-                                  fontFamily: 'Poppins Regular'),
+                                  color: Colors.white,
+                                  fontFamily: 'Poppins Semibold',
+                                  fontSize: width * 0.04),
                             ),
                           ),
                         ),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              'AM',
-                              style: TextStyle(
-                                  color: openingTime.period
-                                              .toString()
-                                              .split('.')[1] ==
-                                          "am"
-                                      ? Color(Utils.hexStringToHexInt('46D0D9'))
-                                      : Colors.black,
-                                  fontFamily: 'Poppins Regular',
-                                  fontSize: width * 0.02),
-                            ),
-                            Text(
-                              'PM',
-                              style: TextStyle(
-                                  color: openingTime.period
-                                              .toString()
-                                              .split('.')[1] ==
-                                          "pm"
-                                      ? Colors.blueAccent
-                                      : Colors.black,
-                                  fontFamily: 'Poppins Regular',
-                                  fontSize: width * 0.02),
-                            )
-                          ],
-                        )
                       ],
                     ),
                   ),
                   SizedBox(
-                    width: width * 0.1,
-                    height: height * 0.02,
-                    child: Divider(
-                      thickness: 2,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: width * 0.02),
-                    child: Row(
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            _closingTime(context);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(width * 0.003),
-                            alignment: Alignment.center,
-                            width: width * 0.1 + width * 0.06,
-                            height: height * 0.05,
-                            margin: EdgeInsets.only(right: width * 0.01),
-                            decoration: BoxDecoration(
-                                color: Color(Utils.hexStringToHexInt('E5E5E5')),
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Text(
-                              "${closingTime.hour}:${closingTime.minute}",
-                              style: TextStyle(
-                                  fontSize: width * 0.02,
-                                  color: Colors.black,
-                                  fontFamily: 'Poppins Regular'),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              'AM',
-                              style: TextStyle(
-                                  color: closingTime.period
-                                              .toString()
-                                              .split('.')[1] ==
-                                          "am"
-                                      ? Color(Utils.hexStringToHexInt('46D0D9'))
-                                      : Colors.black,
-                                  fontFamily: 'Poppins Regular',
-                                  fontSize: width * 0.02),
-                            ),
-                            Text(
-                              'PM',
-                              style: TextStyle(
-                                  color: closingTime.period
-                                              .toString()
-                                              .split('.')[1] ==
-                                          "pm"
-                                      ? Colors.blueAccent
-                                      : Colors.black,
-                                  fontFamily: 'Poppins Regular',
-                                  fontSize: width * 0.02),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                    height: 15,
+                  )
                 ],
               ),
-              Container(
-                margin: EdgeInsets.only(left: width * 0.08, top: 8.0),
-                child: Text(
-                  'Reason of the Holiday  ',
-                  style: TextStyle(
-                      fontFamily: 'Poppins Regular',
-                      color: Color(Utils.hexStringToHexInt('8D8D8D')),
-                      fontSize: width * 0.04),
-                ),
-              ),
-              Container(
-                height: height * 0.3,
-                child: Expanded(
-                  child: Column(
-                    children: reasonOfHoliday
-                        .map((data) => Expanded(
-                              child: RadioListTile(
-                                title: Text(
-                                  "${data.name}",
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins Regular',
-                                      color: Color(
-                                          Utils.hexStringToHexInt('8D8D8D')),
-                                      fontSize: width * 0.03),
-                                ),
-                                groupValue: holidayid,
-                                value: data.index,
-                                onChanged: (val) {
-                                  setState(() {
-                                    holidayItem = data.name;
-                                    holidayid = data.index;
-                                  });
-                                },
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * 0.04,
-              ),
-              GestureDetector(
-                onTap: () {
-                  applyLeave();
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: width * 0.4,
-                      height: height * 0.1 - height * 0.02,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(width * 0.05),
-                          color: Color(Utils.hexStringToHexInt('4285F4'))),
-                      child: Center(
-                        child: Text(
-                          'SAVE',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Poppins Semibold',
-                              fontSize: width * 0.04),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              )
-            ],
+            ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   _selectTime(BuildContext context) async {

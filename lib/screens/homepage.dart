@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   var session="";
 
 
+
   @override
   Widget build(BuildContext context) {
     SharedPreferences.getInstance().then((SharedPreferences sp) {
@@ -133,11 +134,32 @@ class _HomePageState extends State<HomePage> {
                               "Pending",
                               style: TextStyle(color: Colors.red),
                             )),
-                        value: 'Pending')
+                        value: 'Pending'),
+                    PopupMenuItem<String>(
+                        child: Container(
+                            width: 100,
+                            // height: 30,
+                            child: const Text(
+                              "Completed",
+                              style: TextStyle(color: Colors.red),
+                            )),
+                        value: 'Completed'),
+                    PopupMenuItem<String>(
+                        child: Container(
+                            width: 100,
+                            // height: 30,
+                            child: const Text(
+                              "Rejected",
+                              style: TextStyle(color: Colors.red),
+                            )),
+                        value: 'Rejected'),
                   ],
                   onSelected: (index) async {
                     print(index);
-                    bookingController.filterStatus(index);
+                    setState(() {
+                      bookingController.element = [];
+                      bookingController.filterStatus(index);
+                    });
                   }),
             ],
           ),
@@ -720,7 +742,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           },
-        )  ;
+        );
       },
       child: Container(
         width: width,
@@ -743,7 +765,6 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   width: width * 0.02,
                 ),
-
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -773,8 +794,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                     padding: EdgeInsets.all(5.0),
                                     child: Text(
-                                      '${ element.status == "Accepted"?"In Progress " : element.status == "Pending"
-                                     ?"New Order ": element.status == "Completed"?"Completed ":"Rejected " }',
+                                      '${element.status == "Accepted" ? "In Progress " : element.status == "Pending" ? "New Order " : element.status == "Completed" ? "Completed " : "Rejected "}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: width * 0.02,
@@ -786,29 +806,115 @@ class _HomePageState extends State<HomePage> {
                           ),
                           // Visibility(
                           //     visible:
-                          //         element.status == "Accepted" ? false : true,
-                          //     child: Container(
-                          //       width: width * 0.2,
-                          //       height: 28,
-                          //       decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(6.0),
-                          //           color: Colors.cyan),
-                          //       child: Center(
-                          //         child: Text(
-                          //           "Confirm",
-                          //           style: TextStyle(
-                          //               color: Colors.white, fontSize: 12),
+                          //         element.status == "Accepted" ?
+                          //         false
+                          //             : true,
+                          //     child:
+                          //     InkWell(
+                          //       onTap: () async {
+                          //         //  bookingController.acceptBooking(element.id);
+                          //         Map map = {
+                          //           "session_id": box.read('session'),
+                          //           "booking_id": element.id.toString()
+                          //         };
+                          //         print(map);
+                          //         var apiUrl = Uri.parse(AppConstant.BASE_URL +
+                          //             AppConstant.ACCEPT_BOOKING);
+                          //         print(apiUrl);
+                          //         print(map);
+                          //         final response = await http.post(
+                          //           apiUrl,
+                          //           body: map,
+                          //         );
+                          //         print(response.body);
+                          //         var data = response.body;
+                          //         final body = json.decode(response.body);
+                          //         if (body['message'] ==
+                          //             "Booking has been accepted successfully.") {
+                          //           setState(() {
+                          //             bookingController.slotDetail!.clear();
+                          //             bookingController
+                          //                 .bookingPojo.value.slotDetail!
+                          //                 .clear();
+                          //
+                          //             bookingController.getBookingList();
+                          //           });
+                          //         }
+                          //       },
+                          //       child: Container(
+                          //         width: width * 0.2,
+                          //         height: 28,
+                          //         decoration: BoxDecoration(
+                          //             borderRadius: BorderRadius.circular(6.0),
+                          //             color: Colors.cyan),
+                          //         child: Center(
+                          //           child: Text(
+                          //             "Confirm",
+                          //             style: TextStyle(
+                          //                 color: Colors.white, fontSize: 12),
+                          //           ),
                           //         ),
                           //       ),
-                          //     ))
+                          //     )),
+                          // Visibility(
+                          //     visible:
+                          //         element.status == "Accepted" ?
+                          //         true
+                          //             : element.status == "Rejected" ? true : false,
+                          //     child:
+                          //     InkWell(
+                          //       onTap: () async {
+                          //         // bookingController.acceptBooking(element.id);
+                          //         Map map = {
+                          //           "session_id": box.read('session'),
+                          //           "booking_id": element.id.toString()
+                          //         };
+                          //         print(map);
+                          //         var apiUrl = Uri.parse(AppConstant.BASE_URL +
+                          //             AppConstant.COMPLETE_BOOKIND);
+                          //         print(apiUrl);
+                          //         print(map);
+                          //         final response = await http.post(
+                          //           apiUrl,
+                          //           body: map,
+                          //         );
+                          //         print(response.body);
+                          //         var data = response.body;
+                          //         final body = json.decode(response.body);
+                          //         if (body['message'] ==
+                          //             "Booking has been completed successfully.") {
+                          //           setState(() {
+                          //             bookingController.slotDetail!.clear();
+                          //             bookingController
+                          //                 .bookingPojo.value.slotDetail!
+                          //                 .clear();
+                          //             bookingController.getBookingList();
+                          //           });
+                          //         }
+                          //       },
+                          //       child: Container(
+                          //         width: width * 0.2,
+                          //         height: 28,
+                          //         decoration: BoxDecoration(
+                          //             borderRadius: BorderRadius.circular(6.0),
+                          //             color: Colors.cyan),
+                          //         child: const Center(
+                          //           child: Text(
+                          //             "Complete",
+                          //             style: TextStyle(
+                          //                 color: Colors.white, fontSize: 12),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          // ),
 
-                          /*Show Button on condition on Status*/
                           element.status == "Accepted"
                               ? InkWell(
                             onTap: () async {
                               // bookingController.acceptBooking(element.id);
                               Map map = {
-                                "session_id":session,
+                                "session_id": session,
                                 "booking_id": element.id.toString()
                               };
                               print(map);
@@ -854,12 +960,14 @@ class _HomePageState extends State<HomePage> {
                               : element.status == "Pending"
                               ? InkWell(
                             onTap: () async {
-                              //  bookingController.acceptBooking(element.id);
+
+
                               Map map = {
-                                "session_id": session,
+                                "session_id":session,
                                 "booking_id": element.id.toString()
                               };
                               print(map);
+
                               var apiUrl = Uri.parse(
                                   AppConstant.BASE_URL +
                                       AppConstant.ACCEPT_BOOKING);
@@ -872,8 +980,7 @@ class _HomePageState extends State<HomePage> {
                               print(response.body);
                               var data = response.body;
                               final body = json.decode(response.body);
-                              if (body['message'] !=
-                                  "") {
+                              if (body['message'] != "") {
                                 setState(() {
                                   bookingController.element
                                       .clear();
@@ -892,7 +999,7 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius:
                                   BorderRadius.circular(6.0),
                                   color: Colors.cyan),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "Confirm",
                                   style: TextStyle(
@@ -902,38 +1009,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           )
-                              : element.status == "Completed"?
-                                    InkWell(
-                            onTap: () async {
-                              //  bookingController.acceptBooking(element.id);
-                              // Map map = {
-                              //   "session_id": box.read('session'),
-                              //   "booking_id": element.id.toString()
-                              // };
-                              // print(map);
-                              // var apiUrl = Uri.parse(AppConstant.BASE_URL +
-                              //     AppConstant.ACCEPT_BOOKING);
-                              // print(apiUrl);
-                              // print(map);
-                              // final response = await http.post(
-                              //   apiUrl,
-                              //   body: map,
-                              // );
-                              // print(response.body);
-                              // var data = response.body;
-                              // final body = json.decode(response.body);
-                              // if (body['message'] ==
-                              //     "Booking has been accepted successfully.") {
-                              //   setState(() {
-                              //     bookingController.slotDetail!.clear();
-                              //     bookingController
-                              //         .bookingPojo.value.slotDetail!
-                              //         .clear();
-                              //
-                              //     bookingController.getBookingList();
-                              //   });
-                              // }
-                            },
+                              : element.status == "Completed"
+                              ? InkWell(
+                            onTap: () async {},
                             child: Container(
                               width: width * 0.2,
                               height: 28,
@@ -950,38 +1028,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                          ):
-                          InkWell(
-                            onTap: () async {
-                              //  bookingController.acceptBooking(element.id);
-                              // Map map = {
-                              //   "session_id": box.read('session'),
-                              //   "booking_id": element.id.toString()
-                              // };
-                              // print(map);
-                              // var apiUrl = Uri.parse(AppConstant.BASE_URL +
-                              //     AppConstant.ACCEPT_BOOKING);
-                              // print(apiUrl);
-                              // print(map);
-                              // final response = await http.post(
-                              //   apiUrl,
-                              //   body: map,
-                              // );
-                              // print(response.body);
-                              // var data = response.body;
-                              // final body = json.decode(response.body);
-                              // if (body['message'] ==
-                              //     "Booking has been accepted successfully.") {
-                              //   setState(() {
-                              //     bookingController.slotDetail!.clear();
-                              //     bookingController
-                              //         .bookingPojo.value.slotDetail!
-                              //         .clear();
-                              //
-                              //     bookingController.getBookingList();
-                              //   });
-                              // }
-                            },
+                          )
+                              : InkWell(
+                            onTap: () async {},
                             child: Container(
                               width: width * 0.2,
                               height: 28,
@@ -1002,7 +1051,6 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-
                     Text(
                       'Visit on 24 Jun, 10:00 AM',
                       style: TextStyle(
@@ -1075,6 +1123,594 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  // Widget _getItem(context, SlotDetail element) {
+  //   var width = MediaQuery.of(context).size.width;
+  //   var height = MediaQuery.of(context).size.height;
+  //
+  //   List<String> serviceName = [];
+  //   element.service!.forEach((element) {
+  //     serviceName.add(element.name.toString());
+  //   });
+  //
+  //   var finalgroupChatIdList = serviceName.join(",");
+  //
+  //   return InkWell(
+  //     onTap: () {
+  //       var width = MediaQuery.of(context).size.width;
+  //       var height = MediaQuery.of(context).size.height;
+  //       showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           List<Service> tempArray = [];
+  //
+  //           return AlertDialog(
+  //             title: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: <Widget>[
+  //                 Text(
+  //                   "Order detail of ${element.bookingId}",
+  //                   style: TextStyle(
+  //                       fontFamily: 'Poppins Regular',
+  //                       color: Colors.black,
+  //                       fontSize: width * 0.03),
+  //                 ),
+  //                 IconButton(
+  //                     onPressed: () {
+  //                       Navigator.pop(context);
+  //                     },
+  //                     icon: Icon(
+  //                       Icons.close,
+  //                     ))
+  //               ],
+  //             ),
+  //             content: StatefulBuilder(
+  //               // You need this, notice the parameters below:
+  //               builder: (BuildContext context, StateSetter setState) {
+  //                 return Container(
+  //                     width: width,
+  //                     height: height * 0.5,
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: <Widget>[
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "Name",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text(
+  //                               "${element.userName}",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "BookingID",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text(
+  //                               "${element.bookingId}",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                           ],
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "Booking Date",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text(
+  //                                 "${element.date!.day}-${element.date!.month}-${element.date!.year}",
+  //                                 style: TextStyle(
+  //                                     fontFamily: 'Poppins Regular',
+  //                                     color: Color(
+  //                                         Utils.hexStringToHexInt('C4C4C4')),
+  //                                     fontSize: width * 0.03)),
+  //                           ],
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "Payment Mode",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text(
+  //                                 "${element.payment_type == null ? "" : element.payment_type}",
+  //                                 style: TextStyle(
+  //                                     fontFamily: 'Poppins Regular',
+  //                                     color: Color(
+  //                                         Utils.hexStringToHexInt('C4C4C4')),
+  //                                     fontSize: width * 0.03)),
+  //                           ],
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "Transaction id",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text("${element.transaction_id}",
+  //                                 style: TextStyle(
+  //                                     fontFamily: 'Poppins Regular',
+  //                                     color: Color(
+  //                                         Utils.hexStringToHexInt('C4C4C4')),
+  //                                     fontSize: width * 0.03)),
+  //                           ],
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "Coupon Code",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text(
+  //                                 "${element.coupon_code == null ? "N/A" : element.coupon_code}",
+  //                                 style: TextStyle(
+  //                                     fontFamily: 'Poppins Regular',
+  //                                     color: Color(
+  //                                         Utils.hexStringToHexInt('C4C4C4')),
+  //                                     fontSize: width * 0.03)),
+  //                           ],
+  //                         ),
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: <Widget>[
+  //                             Text(
+  //                               "Coin ",
+  //                               style: TextStyle(
+  //                                   fontFamily: 'Poppins Regular',
+  //                                   color: Color(
+  //                                       Utils.hexStringToHexInt('C4C4C4')),
+  //                                   fontSize: width * 0.03),
+  //                             ),
+  //                             Text(
+  //                                 "${element.coin == null ? "N/A" : element.coin} (100 coins = ₹ 1)",
+  //                                 style: TextStyle(
+  //                                     fontFamily: 'Poppins Regular',
+  //                                     color: Color(
+  //                                         Utils.hexStringToHexInt('C4C4C4')),
+  //                                     fontSize: width * 0.03)),
+  //                           ],
+  //                         ),
+  //                         LimitedBox(
+  //                           maxHeight: height * 0.3,
+  //                           child: ListView.builder(
+  //                               itemCount: element.service!.length,
+  //                               itemBuilder: (context, position) {
+  //                                 return Container(
+  //                                   height: height * 0.03,
+  //                                   margin: EdgeInsets.only(left: 4, right: 4),
+  //                                   child: Container(
+  //                                     width: width,
+  //                                     child: Row(
+  //                                       mainAxisAlignment:
+  //                                       MainAxisAlignment.spaceBetween,
+  //                                       children: <Widget>[
+  //                                         Column(
+  //                                           mainAxisAlignment:
+  //                                           MainAxisAlignment.center,
+  //                                           crossAxisAlignment:
+  //                                           CrossAxisAlignment.start,
+  //                                           children: <Widget>[
+  //                                             Text(
+  //                                               "${element.service![position].name}",
+  //                                               style: TextStyle(fontSize: 8.0),
+  //                                             ),
+  //                                           ],
+  //                                         ),
+  //                                         Text(
+  //                                           "${element.service![position].price}",
+  //                                           style: TextStyle(fontSize: 8.0),
+  //                                         )
+  //                                       ],
+  //                                     ),
+  //                                   ),
+  //                                 );
+  //                               }),
+  //                         )
+  //                       ],
+  //                     ));
+  //               },
+  //             ),
+  //           );
+  //         },
+  //       )  ;
+  //     },
+  //     child: Container(
+  //       width: width,
+  //       child: Column(
+  //         children: [
+  //           SizedBox(
+  //             height: height * 0.01,
+  //           ),
+  //           Row(
+  //             mainAxisAlignment: MainAxisAlignment.start,
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: <Widget>[
+  //               Container(
+  //                 margin: EdgeInsets.only(left: width * 0.03),
+  //                 child: CircleAvatar(
+  //                   radius: width * 0.07,
+  //                   backgroundImage: NetworkImage("${element.userImage}"),
+  //                 ),
+  //               ),
+  //               SizedBox(
+  //                 width: width * 0.02,
+  //               ),
+  //
+  //               Column(
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: <Widget>[
+  //                   Container(
+  //                     width: width * 0.7,
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: <Widget>[
+  //                         Row(
+  //                           children: <Widget>[
+  //                             Text(
+  //                               '${element.bookingId}',
+  //                               style: TextStyle(
+  //                                   color: Colors.black,
+  //                                   fontFamily: 'Poppins Semibold',
+  //                                   fontSize: width * 0.04),
+  //                             ),
+  //                             Container(
+  //                                 width: 64,
+  //                                 decoration: BoxDecoration(
+  //                                     image: DecorationImage(
+  //                                         image: AssetImage(
+  //                                           'images/svgicons/tagbackpn.png',
+  //                                         ),
+  //                                         fit: BoxFit.fitHeight)),
+  //                                 child: Container(
+  //                                   padding: EdgeInsets.all(5.0),
+  //                                   child: Text(
+  //                                     '${ element.status == "Accepted"?"In Progress " : element.status == "Pending"
+  //                                    ?"New Order ": element.status == "Completed"?"Completed ":"Rejected " }',
+  //                                     textAlign: TextAlign.center,
+  //                                     style: TextStyle(
+  //                                         fontSize: width * 0.02,
+  //                                         color: Colors.white,
+  //                                         fontFamily: 'Poppins Regular'),
+  //                                   ),
+  //                                 ))
+  //                           ],
+  //                         ),
+  //                         // Visibility(
+  //                         //     visible:
+  //                         //         element.status == "Accepted" ? false : true,
+  //                         //     child: Container(
+  //                         //       width: width * 0.2,
+  //                         //       height: 28,
+  //                         //       decoration: BoxDecoration(
+  //                         //           borderRadius: BorderRadius.circular(6.0),
+  //                         //           color: Colors.cyan),
+  //                         //       child: Center(
+  //                         //         child: Text(
+  //                         //           "Confirm",
+  //                         //           style: TextStyle(
+  //                         //               color: Colors.white, fontSize: 12),
+  //                         //         ),
+  //                         //       ),
+  //                         //     ))
+  //
+  //                         /*Show Button on condition on Status*/
+  //                         element.status == "Accepted"
+  //                             ? InkWell(
+  //                           onTap: () async {
+  //                             // bookingController.acceptBooking(element.id);
+  //                             Map map = {
+  //                               "session_id":session,
+  //                               "booking_id": element.id.toString()
+  //                             };
+  //                             print(map);
+  //                             var apiUrl = Uri.parse(
+  //                                 AppConstant.BASE_URL +
+  //                                     AppConstant.COMPLETE_BOOKIND);
+  //                             print(apiUrl);
+  //                             print(map);
+  //                             final response = await http.post(
+  //                               apiUrl,
+  //                               body: map,
+  //                             );
+  //                             print(response.body);
+  //                             var data = response.body;
+  //                             final body = json.decode(response.body);
+  //                             if (body['message'] ==
+  //                                 "Booking has been completed successfully.") {
+  //                               setState(() {
+  //                                 bookingController.element.clear();
+  //                                 bookingController
+  //                                     .bookingPojo.value.slotDetail!
+  //                                     .clear();
+  //                                 bookingController.getBookingList(session);
+  //                               });
+  //                             }
+  //                           },
+  //                           child: Container(
+  //                             width: width * 0.2,
+  //                             height: 28,
+  //                             decoration: BoxDecoration(
+  //                                 borderRadius:
+  //                                 BorderRadius.circular(6.0),
+  //                                 color: Colors.cyan),
+  //                             child: const Center(
+  //                               child: Text(
+  //                                 "Accepted",
+  //                                 style: TextStyle(
+  //                                     color: Colors.white, fontSize: 12),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         )
+  //                             : element.status == "Pending"
+  //                             ? InkWell(
+  //                           onTap: () async {
+  //                             //  bookingController.acceptBooking(element.id);
+  //                             Map map = {
+  //                               "session_id": session,
+  //                               "booking_id": element.id.toString()
+  //                             };
+  //                             print(map);
+  //                             var apiUrl = Uri.parse(
+  //                                 AppConstant.BASE_URL +
+  //                                     AppConstant.ACCEPT_BOOKING);
+  //                             print(apiUrl);
+  //                             print(map);
+  //                             final response = await http.post(
+  //                               apiUrl,
+  //                               body: map,
+  //                             );
+  //                             print(response.body);
+  //                             var data = response.body;
+  //                             final body = json.decode(response.body);
+  //                             if (body['message'] !=
+  //                                 "") {
+  //                               setState(() {
+  //                                 bookingController.element
+  //                                     .clear();
+  //                                 bookingController
+  //                                     .bookingPojo.value.slotDetail!
+  //                                     .clear();
+  //
+  //                                 bookingController.getBookingList(session);
+  //                               });
+  //                             }
+  //                           },
+  //                           child: Container(
+  //                             width: width * 0.2,
+  //                             height: 28,
+  //                             decoration: BoxDecoration(
+  //                                 borderRadius:
+  //                                 BorderRadius.circular(6.0),
+  //                                 color: Colors.cyan),
+  //                             child: Center(
+  //                               child: Text(
+  //                                 "Confirm",
+  //                                 style: TextStyle(
+  //                                     color: Colors.white,
+  //                                     fontSize: 12),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         )
+  //                             : element.status == "Completed"?
+  //                                   InkWell(
+  //                           onTap: () async {
+  //                             //  bookingController.acceptBooking(element.id);
+  //                             // Map map = {
+  //                             //   "session_id": box.read('session'),
+  //                             //   "booking_id": element.id.toString()
+  //                             // };
+  //                             // print(map);
+  //                             // var apiUrl = Uri.parse(AppConstant.BASE_URL +
+  //                             //     AppConstant.ACCEPT_BOOKING);
+  //                             // print(apiUrl);
+  //                             // print(map);
+  //                             // final response = await http.post(
+  //                             //   apiUrl,
+  //                             //   body: map,
+  //                             // );
+  //                             // print(response.body);
+  //                             // var data = response.body;
+  //                             // final body = json.decode(response.body);
+  //                             // if (body['message'] ==
+  //                             //     "Booking has been accepted successfully.") {
+  //                             //   setState(() {
+  //                             //     bookingController.slotDetail!.clear();
+  //                             //     bookingController
+  //                             //         .bookingPojo.value.slotDetail!
+  //                             //         .clear();
+  //                             //
+  //                             //     bookingController.getBookingList();
+  //                             //   });
+  //                             // }
+  //                           },
+  //                           child: Container(
+  //                             width: width * 0.2,
+  //                             height: 28,
+  //                             decoration: BoxDecoration(
+  //                                 borderRadius:
+  //                                 BorderRadius.circular(6.0),
+  //                                 color: Colors.lightGreen),
+  //                             child: Center(
+  //                               child: Text(
+  //                                 "Completed",
+  //                                 style: TextStyle(
+  //                                     color: Colors.white,
+  //                                     fontSize: 12),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ):
+  //                         InkWell(
+  //                           onTap: () async {
+  //                             //  bookingController.acceptBooking(element.id);
+  //                             // Map map = {
+  //                             //   "session_id": box.read('session'),
+  //                             //   "booking_id": element.id.toString()
+  //                             // };
+  //                             // print(map);
+  //                             // var apiUrl = Uri.parse(AppConstant.BASE_URL +
+  //                             //     AppConstant.ACCEPT_BOOKING);
+  //                             // print(apiUrl);
+  //                             // print(map);
+  //                             // final response = await http.post(
+  //                             //   apiUrl,
+  //                             //   body: map,
+  //                             // );
+  //                             // print(response.body);
+  //                             // var data = response.body;
+  //                             // final body = json.decode(response.body);
+  //                             // if (body['message'] ==
+  //                             //     "Booking has been accepted successfully.") {
+  //                             //   setState(() {
+  //                             //     bookingController.slotDetail!.clear();
+  //                             //     bookingController
+  //                             //         .bookingPojo.value.slotDetail!
+  //                             //         .clear();
+  //                             //
+  //                             //     bookingController.getBookingList();
+  //                             //   });
+  //                             // }
+  //                           },
+  //                           child: Container(
+  //                             width: width * 0.2,
+  //                             height: 28,
+  //                             decoration: BoxDecoration(
+  //                                 borderRadius:
+  //                                 BorderRadius.circular(6.0),
+  //                                 color: Colors.red),
+  //                             child: Center(
+  //                               child: Text(
+  //                                 "Rejected",
+  //                                 style: TextStyle(
+  //                                     color: Colors.white,
+  //                                     fontSize: 12),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //
+  //                   Text(
+  //                     'Visit on 24 Jun, 10:00 AM',
+  //                     style: TextStyle(
+  //                         fontFamily: 'Poppins Regular',
+  //                         color: Color(Utils.hexStringToHexInt('C4C4C4')),
+  //                         fontSize: width * 0.03),
+  //                   ),
+  //                   // Container(
+  //                   //   child: Row(
+  //                   //     children: [
+  //                   //       Expanded(
+  //                   //         child: Text(
+  //                   //           'Services: ${finalgroupChatIdList}',
+  //                   //           style: TextStyle(
+  //                   //               fontFamily: 'Poppins Regular',
+  //                   //               color: Color(Utils.hexStringToHexInt('C4C4C4')),
+  //                   //               fontSize: width * 0.03),
+  //                   //         ),
+  //                   //       ),
+  //                   //     ],
+  //                   //   ),
+  //                   // ),
+  //                   // Container(
+  //                   //     child: Row(
+  //                   //   children: <Widget>[
+  //                   //     new AutoSizeText(
+  //                   //       'Services: ${finalgroupChatIdList}',
+  //                   //       style: TextStyle(
+  //                   //           fontFamily: 'Poppins Regular',
+  //                   //           color: Color(Utils.hexStringToHexInt('C4C4C4')),
+  //                   //           fontSize: width * 0.03),
+  //                   //     )
+  //                   //   ],
+  //                   // )),
+  //                   // SizedBox(
+  //                   //   width: width,
+  //                   //   height: height*0.03,
+  //                   //   child:  Row(
+  //                   //       mainAxisAlignment: MainAxisAlignment.center,
+  //                   //       children: <Widget>[
+  //                   //         Container(
+  //                   //           width: width * 0.7,
+  //                   //           child: Expanded(
+  //                   //             child:
+  //                   //             Text(
+  //                   //               'Services: ${finalgroupChatIdList}',
+  //                   //               style: TextStyle(
+  //                   //                   fontFamily: 'Poppins Regular',
+  //                   //                   color: Color(
+  //                   //                       Utils.hexStringToHexInt('C4C4C4')),
+  //                   //                   fontSize: width * 0.03),
+  //                   //             ),
+  //                   //           ),
+  //                   //         )
+  //                   //       ]),
+  //                   // )
+  //                 ],
+  //               )
+  //             ],
+  //           ),
+  //           SizedBox(
+  //             height: height * 0.01,
+  //           ),
+  //           Divider(
+  //             thickness: 1,
+  //             color: Colors.grey,
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _getGroupSeparator(SlotDetail element) {
     var width = MediaQuery.of(context).size.width;

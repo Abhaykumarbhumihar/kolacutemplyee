@@ -148,34 +148,34 @@ class _HomePageState extends State<ProfilePage> {
                                         fontFamily: 'Poppins Medium'),
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(right: width * 0.02),
-                                  width: width * 0.2,
-                                  height: height * 0.03,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(width * 0.01),
-                                      color:
-                                      Color(Utils.hexStringToHexInt('#ecfafb'))),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Center(
-                                        child: SvgPicture.asset(
-                                          "images/svgicons/modify.svg",
-                                        ),
-                                      ),
-                                      Text(
-                                        'Modify',
-                                        style: TextStyle(
-                                            fontSize: width * 0.02,
-                                            fontFamily: 'Poppins Regular',
-                                            color: Color(
-                                                Utils.hexStringToHexInt('46D0D9'))),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                // Container(
+                                //   margin: EdgeInsets.only(right: width * 0.02),
+                                //   width: width * 0.2,
+                                //   height: height * 0.03,
+                                //   decoration: BoxDecoration(
+                                //       borderRadius:
+                                //       BorderRadius.circular(width * 0.01),
+                                //       color:
+                                //       Color(Utils.hexStringToHexInt('#ecfafb'))),
+                                //   child: Row(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: <Widget>[
+                                //       Center(
+                                //         child: SvgPicture.asset(
+                                //           "images/svgicons/modify.svg",
+                                //         ),
+                                //       ),
+                                //       Text(
+                                //         'Modify',
+                                //         style: TextStyle(
+                                //             fontSize: width * 0.02,
+                                //             fontFamily: 'Poppins Regular',
+                                //             color: Color(
+                                //                 Utils.hexStringToHexInt('46D0D9'))),
+                                //       )
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             ),
                             Container(

@@ -129,4 +129,3 @@ class Service {
     "price": price,
   };
 }
-

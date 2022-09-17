@@ -34,12 +34,14 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
     DateFormat format = DateFormat('yyyy-MM-dd');
     return format.parse(dateString);
   }
+
   GlobalKey<ScaffoldState> scaffolKey = GlobalKey<ScaffoldState>();
   var name = "";
-  var email="";
-  var phone="";
-  var iamge="";
+  var email = "";
+  var phone = "";
+  var iamge = "";
   late SharedPreferences sharedPreferences;
+  var focuseddaate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +53,12 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
       var _phoneValue = sharedPreferences.getString("phoneno");
       setState(() {
         name = _testValue!;
-        email=emailValue!;
-        phone=_phoneValue!;
-        iamge=_imageValue!;
+        email = emailValue!;
+        phone = _phoneValue!;
+        iamge = _imageValue!;
       });
       // will be null if never previously saved
-    //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
+      //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
     });
     final List<Color> colors = [
       Colors.pink,
@@ -70,7 +72,8 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
         key: scaffolKey,
-        drawer:   SideNavigatinPage("${name}", "${iamge}", "${email}", "${phone}"),
+        drawer:
+            SideNavigatinPage("${name}", "${iamge}", "${email}", "${phone}"),
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -79,9 +82,8 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           titleSpacing: 0,
           centerTitle: false,
           leading: InkWell(
-            onTap: (){
+            onTap: () {
               scaffolKey.currentState!.openDrawer();
-
             },
             child: Icon(
               Icons.menu,
@@ -106,8 +108,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           if (leaveapplyController.lodaer) {
             return Container();
           } else {
-            List<Datum>? events =
-                leaveapplyController.data;
+            List<Datum>? events = leaveapplyController.data;
             return Container(
               width: width,
               height: height,
@@ -121,76 +122,173 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Center(
-                        child: TableCalendar(
-                          focusedDay: DateTime.now(),
-                          firstDay: DateTime(2022),
-                          lastDay: DateTime(2060),
-                          onPageChanged: (DateTime date) {
-                            //
-                          },
-                          onFormatChanged: (format) {
-                            //
-                          },
-                          onDaySelected: (selectedTime, focusedTime) {
-                            //
-                          },
-                          calendarBuilders: CalendarBuilders(
-                            defaultBuilder: (ctx, day, focusedDay) {
-                              int index = 0;
-                              for (var leaveEvent = 0;
-                                  leaveEvent < events!.length;
-                                  leaveEvent++) {
-                                index++;
-                                final DateTime event = _stringToDateTimeObject(
-                                    events[leaveEvent].calenderDate.toString());
-                                if (day.day == event.day &&
-                                    day.month == event.month &&
-                                    day.year == event.year) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Material(
-                                      elevation: 6.0,
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(8.0),
-                                          ),
+                        child: SizedBox(
+                          width: width,
+                          height: height * 0.5,
+                          child: TableCalendar(
+                            focusedDay: focuseddaate,
+                            firstDay: DateTime(2022),
+                            lastDay: DateTime(2060),
+                            calendarStyle: CalendarStyle(
+                                todayTextStyle: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03,
+                                    color: Colors.white),
+                                weekendTextStyle: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03),
+                                outsideTextStyle: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03),
+                                defaultTextStyle: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03)),
+                            selectedDayPredicate: (day) =>
+                                isSameDay(day, focuseddaate),
+                            headerStyle: HeaderStyle(
+                                titleCentered: true,
+                                titleTextFormatter: (date, locale) =>
+                                    DateFormat.yMMM(locale).format(date),
+                                formatButtonVisible: false,
+                                titleTextStyle: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.05)),
+                            shouldFillViewport: true,
+                            onPageChanged: (DateTime date) {
+                              setState(() {
+                                focuseddaate = date;
+                              });
+                            },
+                            onFormatChanged: (format) {
+                              //
+                            },
+                            onDaySelected: (selectedTime, focusedTime) {
+                              setState(() {
+                                focuseddaate = selectedTime;
+                              });
+                              var mon = "";
+                              var datee = "";
+                              if (int.parse(selectedTime.month.toString()) >
+                                  9) {
+                                mon = selectedTime.month.toString();
+                              } else {
+                                mon = "0" + selectedTime.month.toString();
+                              }
+
+                              if (int.parse(selectedTime.day.toString()) > 9) {
+                                datee = selectedTime.day.toString();
+                              } else {
+                                datee = "0" + selectedTime.day.toString();
+                              }
+                              var date = selectedTime.year.toString() +
+                                  "-" +
+                                  mon +
+                                  "-" +
+                                  datee;
+                              //  print(date);
+                              var newlist = leaveapplyController
+                                  .leaveApplyPojo.value.data!
+                                  .where((x) => x.calenderDate
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(date))
+                                  .toList();
+                              print(newlist);
+                              if(newlist.isNotEmpty){
+                                Get.dialog(
+                                  Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child:
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          minHeight: 0.2,
+                                          maxHeight: height * 0.5,
                                         ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Container(
-                                              child: Center(
-                                                child: Text('${day.day}'),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 15,
-                                              height: 6,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(6.0),
-                                                color: events[leaveEvent]
-                                                            .holidayType ==
-                                                        "Fully off"
-                                                    ? Colors.cyan
-                                                    : Colors.orange,
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                        child: recentleavelistbottom(
+                                            width, height, context, newlist),
                                       ),
                                     ),
-                                  );
-                                }
+                                  ),
+                                  barrierDismissible: false,
+                                );
+                              }else{
+                                CommonDialog.showsnackbar("No data found for this date");
                               }
-                              return null;
+
+
                             },
+                            calendarBuilders: CalendarBuilders(
+                              defaultBuilder: (ctx, day, focusedDay) {
+                                int index = 0;
+                                for (var leaveEvent = 0;
+                                    leaveEvent < events!.length;
+                                    leaveEvent++) {
+                                  index++;
+                                  final DateTime event =
+                                      _stringToDateTimeObject(events[leaveEvent]
+                                          .calenderDate
+                                          .toString());
+                                  if (day.day == event.day &&
+                                      day.month == event.month &&
+                                      day.year == event.year) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Material(
+                                        elevation: 6.0,
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(8.0),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Container(
+                                                child: Center(
+                                                  child: Text('${day.day}'),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 15,
+                                                height: 6,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          6.0),
+                                                  color: events[leaveEvent]
+                                                              .holidayType ==
+                                                          "Fully off"
+                                                      ? Colors.cyan
+                                                      : Colors.orange,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -232,44 +330,52 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                               icon: null,
                               // add this line
                               itemBuilder: (_) => <PopupMenuItem<String>>[
-                                PopupMenuItem<String>(
-                                    child: Container(
-                                        width: 100,
-                                        // height: 30,
-                                        child: const Text(
-                                          "All",
-                                          style: TextStyle(color: Colors.red),
-                                        )),
-                                    value: 'All'),
-                                PopupMenuItem<String>(
-                                    child: Container(
-                                        width: 100,
-                                        // height: 30,
-                                        child: const Text(
-                                          "Fully off",
-                                          style: TextStyle(color: Colors.red),
-                                        )),
-                                    value: 'Fully off'),
-                                PopupMenuItem<String>(
-                                    child: Container(
-                                        width: 100,
-                                        // height: 30,
-                                        child: const Text(
-                                          "Partial off",
-                                          style: TextStyle(color: Colors.red),
-                                        )),
-                                    value: 'Partial off')
-                              ],
+                                    PopupMenuItem<String>(
+                                        child: Container(
+                                            width: 100,
+                                            // height: 30,
+                                            child: const Text(
+                                              "All",
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            )),
+                                        value: 'All'),
+                                    PopupMenuItem<String>(
+                                        child: Container(
+                                            width: 100,
+                                            // height: 30,
+                                            child: const Text(
+                                              "Fully off",
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            )),
+                                        value: 'Fully off'),
+                                    PopupMenuItem<String>(
+                                        child: Container(
+                                            width: 100,
+                                            // height: 30,
+                                            child: const Text(
+                                              "Partial off",
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            )),
+                                        value: 'Partial off')
+                                  ],
                               onSelected: (index) async {
                                 print(index);
                                 leaveapplyController.filterStatus(index);
                               }),
-
                         ],
                       ),
                     ),
-                    recentleavelist(width, height, context,
-                        leaveapplyController.data),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: 0.2,
+                        maxHeight: height * 0.5,
+                      ),
+                      child: recentleavelist(
+                          width, height, context, leaveapplyController.data),
+                    ),
                     SizedBox(
                       height: 18,
                     )
@@ -280,173 +386,310 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           }
         }));
   }
-
-  Widget recentleavelist(width, height, contet, List<Datum>? data) {
-    return SizedBox(
-      width: width,
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          itemCount: data!.length,
-          shrinkWrap: true,
-          itemBuilder: (context, position) {
-            return Container(
-              margin: EdgeInsets.only(
-                  left: width * 0.04, right: width * 0.04, top: 2, bottom: 2),
-              child: Material(
-                borderRadius: BorderRadius.circular(4),
-                elevation: 4,
-                child: Container(
-                  padding:
-                      EdgeInsets.only(left: 4, right: 4, top: 6, bottom: 6),
-                  width: width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(width * 0.04),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SizedBox(
-                                height: height * 0.004,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(left: width * 0.01),
-                                    width: width * 0.2,
-                                    height: height * 0.03,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(width * 0.01),
-                                        color: data[position].holidayType ==
-                                            "Fully off"
-                                            ?
-                                        Color(
-                                            Utils.hexStringToHexInt(
-                                                "#ecfafb")):Colors.orange),
-                                    child: Center(
-                                      child: Text(
-                                        '${data[position].holidayType.toString()}',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color:
-                                                Colors.black,
-
-
-
-
-                                            fontFamily: 'Poppins Regular',
-                                            fontSize: width * 0.02),
-                                      ),
+  Widget recentleavelistbottom(width, height, contet, List<Datum>? data) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: data!.length,
+        shrinkWrap: true,
+        itemBuilder: (context, position) {
+          return Container(
+            margin: EdgeInsets.only(
+                left: width * 0.04, right: width * 0.04, top: 2, bottom: 2),
+            child: Material(
+              borderRadius: BorderRadius.circular(4),
+              elevation: 4,
+              child: Container(
+                padding: EdgeInsets.only(left: 4, right: 4, top: 6, bottom: 6),
+                width: width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(width * 0.04),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: height * 0.004,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  width: width * 0.2,
+                                  height: height * 0.03,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(width * 0.01),
+                                      color: data[position].holidayType ==
+                                          "Fully off"
+                                          ? Color(Utils.hexStringToHexInt(
+                                          "#ecfafb"))
+                                          : Colors.orange),
+                                  child: Center(
+                                    child: Text(
+                                      '${data[position].holidayType.toString()}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Poppins Regular',
+                                          fontSize: width * 0.02),
                                     ),
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.003,
-                              ),
-                              Text(
-                                "${DateFormat.yMMMMd('en_US').format(DateTime.parse("${data[position].calenderDate}"))}",
-                                style: TextStyle(
-                                    fontSize: width * 0.02,
-                                    color: Color(
-                                        Utils.hexStringToHexInt('8D8D8D')),
-                                    fontFamily: 'Poppins Regular'),
-                              ),
-                              SizedBox(
-                                height: height * 0.003,
-                              ),
-                              Text(
-                                ' ${data[position].holidayReason}',
-                                style: TextStyle(
-                                    fontSize: width * 0.03,
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins Regular'),
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              )
-                            ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: height * 0.003,
+                            ),
+                            Text(
+                              "${DateFormat.yMMMMd('en_US').format(DateTime.parse("${data[position].calenderDate}"))}",
+                              style: TextStyle(
+                                  fontSize: width * 0.02,
+                                  color:
+                                  Color(Utils.hexStringToHexInt('8D8D8D')),
+                                  fontFamily: 'Poppins Regular'),
+                            ),
+                            SizedBox(
+                              height: height * 0.003,
+                            ),
+                            Text(
+                              ' ${data[position].holidayReason}',
+                              style: TextStyle(
+                                  fontSize: width * 0.03,
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins Regular'),
+                            ),
+                            SizedBox(
+                              height: height * 0.01,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: width * 0.02),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            '',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: width * 0.01,
+                                fontFamily: 'Poppins Medium'),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(right: width * 0.02),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  child: data[position].holidayType ==
+                                      "Fully off"
+                                      ? Container(
+                                      width: width * 0.2 - width * 0.09,
+                                      height: height * 0.02,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            width * 0.04),
+                                        color: data[position].holidayType ==
+                                            "Fully off"
+                                            ? Colors.cyan
+                                            : Colors.orange,
+                                      ))
+                                      : Container(
+                                      width: 6,
+                                      height: 6,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            width * 0.04),
+                                        color: data[position].holidayType ==
+                                            "Fully off"
+                                            ? Colors.cyan
+                                            : Colors.orange,
+                                      )),
+                                ),
+                                // Container(
+                                //   width: width * 0.2 - width * 0.09,
+                                //   height: height * 0.02,
+                                //   decoration: BoxDecoration(
+                                //       borderRadius:
+                                //           BorderRadius.circular(width * 0.04),
+                                //       color: data![position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
+                                // )
+                              ],
+                            ),
                           )
                         ],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(right: width * 0.02),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: width * 0.01,
-                                  fontFamily: 'Poppins Medium'),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(right: width * 0.02),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    child: data[position].holidayType ==
-                                            "Fully off"
-                                        ? Container(
-                                            width: width * 0.2 - width * 0.09,
-                                            height: height * 0.02,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      width * 0.04),
-                                              color:
-                                                  data[position].holidayType ==
-                                                          "Fully off"
-                                                      ? Colors.cyan
-                                                      : Colors.orange,
-                                            ))
-                                        : Container(
-                                            width: 6,
-                                            height: 6,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      width * 0.04),
-                                              color:
-                                                  data[position].holidayType ==
-                                                          "Fully off"
-                                                      ? Colors.cyan
-                                                      : Colors.orange,
-                                            )),
-                                  ),
-                                  // Container(
-                                  //   width: width * 0.2 - width * 0.09,
-                                  //   height: height * 0.02,
-                                  //   decoration: BoxDecoration(
-                                  //       borderRadius:
-                                  //           BorderRadius.circular(width * 0.04),
-                                  //       color: data![position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
-                                  // )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
-            );
-          }),
-    );
+            ),
+          );
+        });
+  }
+  Widget recentleavelist(width, height, contet, List<Datum>? data) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: data!.length,
+        shrinkWrap: true,
+        itemBuilder: (context, position) {
+          return Container(
+            margin: EdgeInsets.only(
+                left: width * 0.04, right: width * 0.04, top: 2, bottom: 2),
+            child: Material(
+              borderRadius: BorderRadius.circular(4),
+              elevation: 4,
+              child: Container(
+                padding: EdgeInsets.only(left: 4, right: 4, top: 6, bottom: 6),
+                width: width,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(width * 0.04),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: height * 0.004,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  width: width * 0.2,
+                                  height: height * 0.03,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(width * 0.01),
+                                      color: data[position].holidayType ==
+                                              "Fully off"
+                                          ? Color(Utils.hexStringToHexInt(
+                                              "#ecfafb"))
+                                          : Colors.orange),
+                                  child: Center(
+                                    child: Text(
+                                      '${data[position].holidayType.toString()}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Poppins Regular',
+                                          fontSize: width * 0.02),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: height * 0.003,
+                            ),
+                            Text(
+                              "${DateFormat.yMMMMd('en_US').format(DateTime.parse("${data[position].calenderDate}"))}",
+                              style: TextStyle(
+                                  fontSize: width * 0.02,
+                                  color:
+                                      Color(Utils.hexStringToHexInt('8D8D8D')),
+                                  fontFamily: 'Poppins Regular'),
+                            ),
+                            SizedBox(
+                              height: height * 0.003,
+                            ),
+                            Text(
+                              ' ${data[position].holidayReason}',
+                              style: TextStyle(
+                                  fontSize: width * 0.03,
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins Regular'),
+                            ),
+                            SizedBox(
+                              height: height * 0.01,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: width * 0.02),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            '',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: width * 0.01,
+                                fontFamily: 'Poppins Medium'),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(right: width * 0.02),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  child: data[position].holidayType ==
+                                          "Fully off"
+                                      ? Container(
+                                          width: width * 0.2 - width * 0.09,
+                                          height: height * 0.02,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                width * 0.04),
+                                            color: data[position].holidayType ==
+                                                    "Fully off"
+                                                ? Colors.cyan
+                                                : Colors.orange,
+                                          ))
+                                      : Container(
+                                          width: 6,
+                                          height: 6,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                                width * 0.04),
+                                            color: data[position].holidayType ==
+                                                    "Fully off"
+                                                ? Colors.cyan
+                                                : Colors.orange,
+                                          )),
+                                ),
+                                // Container(
+                                //   width: width * 0.2 - width * 0.09,
+                                //   height: height * 0.02,
+                                //   decoration: BoxDecoration(
+                                //       borderRadius:
+                                //           BorderRadius.circular(width * 0.04),
+                                //       color: data![position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
+                                // )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

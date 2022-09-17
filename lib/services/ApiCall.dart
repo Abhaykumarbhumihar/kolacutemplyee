@@ -37,4 +37,22 @@ class APICall {
     }
   }
 
+  Future<String> registerUrseWithoutbody( url) async {
+    var apiUrl = Uri.parse(AppConstant.BASE_URL + url);
+    print(apiUrl);
+    final response = await http.get(
+      apiUrl,
+    );
+
+    print(response);
+
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return jsonString;
+    } else {
+      return "null";
+    }
+  }
+
+
 }
