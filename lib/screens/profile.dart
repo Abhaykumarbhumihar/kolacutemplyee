@@ -100,8 +100,9 @@ class _HomePageState extends State<ProfilePage> {
                         Container(
                           width: width,
                           height: height * 0.7,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
+                          decoration:  BoxDecoration(
+                            color: Color(Utils.hexStringToHexInt('4285F4')),
+                              image: const DecorationImage(
                                   image: AssetImage(
                                       'images/svgicons/fullbackpn.png'),
                                   fit: BoxFit.fill)),

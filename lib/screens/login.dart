@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../controller/auth_controller.dart';
+import '../utils/CommomDialog.dart';
 import '../utils/Utils.dart';
+import '../utils/appconstant.dart';
 import 'homebottombar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -241,26 +246,33 @@ class _LoginPageState extends State<LoginPage> {
                                             () async {
 
 
-                                          // var apiUrl = Uri
-                                          //     .parse(AppConstant
-                                          //     .BASE_URL +
-                                          //     AppConstant
-                                          //         .UPDTE_SHOP);
-                                          // print(apiUrl);
-                                          // print(map);
-                                          // final response =
-                                          // await http
-                                          //     .post(
-                                          //   apiUrl,
-                                          //   body: map,
-                                          // );
-                                          // print(response
-                                          //     .body);
-                                          // _textFieldControllerupdateABout
-                                          //     .clear();
-                                          Navigator.pop(
-                                              context);
-
+                                              Map map = {
+                                                "email":  _textFieldControllerupdateABout
+                                                    .text
+                                                    .toString()
+                                              };
+                                              print(map);
+                                              var apiUrl = Uri.parse(
+                                                  AppConstant.BASE_URL + "public/api/employee-forgot-password");
+                                              print(apiUrl);
+                                              print(map);
+                                              final response = await http.post(
+                                                apiUrl,
+                                                body: map,
+                                              );
+                                              print(response.body);
+                                              var data = response.body;
+                                              final body = json.decode(response.body);
+                                              setState(() {
+                                                if (body['message'] != "") {
+                                                  CommonDialog.showsnackbar(body['message']);
+                                                  Navigator.pop(context);
+                                                  // CommonDialog.showsnackbar(body['message'] +
+                                                  //     "your code is \n" +
+                                                  //     body['referel_code']);
+                                                  // showLoaderDialog(context, body['referel_code']);
+                                                }
+                                              });
                                         },
                                       ),
                                     ],

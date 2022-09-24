@@ -545,7 +545,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                       ))
                 ],
@@ -1052,7 +1052,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      'Visit on 24 Jun, 10:00 AM',
+                      'Booking time :- ${DateFormat.MMMd('en_US')
+                          .format(DateTime.parse("${element.date}"))} , ${element.toTime}',
                       style: TextStyle(
                           fontFamily: 'Poppins Regular',
                           color: Color(Utils.hexStringToHexInt('C4C4C4')),

@@ -107,7 +107,7 @@ class _GraphState extends State<Graph> {
                         ),
                         Center(
                           child: Text(
-                            '1000',
+                            'Rs 1000',
                             style: TextStyle(
                                 fontFamily: 'Poppins Medium',
                                 fontSize:
