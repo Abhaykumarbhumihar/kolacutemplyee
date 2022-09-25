@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/Utils.dart';
+import 'Coinpage.dart';
+import 'TermconditiionPage.dart';
 import 'applyleave.dart';
 import 'graph.dart';
 import 'login.dart';
@@ -234,6 +236,127 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                           color: Colors.grey,
                         ),
 
+                        ListTile(
+                          leading: Icon(
+                            Icons.share,
+                            color:  Color(Utils.hexStringToHexInt('4285F4')),
+                          ),
+                          title: const Text(' Refer To Earm '),
+                          subtitle: const Text(
+                              ' You will get 50 coin on first order of your firend '),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            // CommonDialog.showLoading(title: "Please wait");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CoinPage()),
+                            );
+                            // Map map = {
+                            //   "session_id": box.read('session'),
+                            // };
+                            // print(map);
+                            // var apiUrl = Uri.parse(
+                            //     AppConstant.BASE_URL + AppConstant.REFER_TO_FRIEND);
+                            // print(apiUrl);
+                            // print(map);
+                            // final response = await http.post(
+                            //   apiUrl,
+                            //   body: map,
+                            // );
+                            // print(response.body);
+                            // var data = response.body;
+                            // final body = json.decode(response.body);
+                            // setState(() {
+                            //   if (body['message'] != "") {
+                            //     CommonDialog.showsnackbar(body['message'] +
+                            //         "your code is \n" +
+                            //         body['referel_code']);
+                            //     showLoaderDialog(context, body['referel_code']);
+                            //   }
+                            // });
+
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     var valueName = "";
+                            //     var valuePrice = "";
+                            //     return AlertDialog(
+                            //       title: Row(
+                            //         mainAxisAlignment:
+                            //             MainAxisAlignment.spaceBetween,
+                            //         children: <Widget>[
+                            //           const Text(
+                            //             'Refer to your friend',
+                            //             style: TextStyle(fontSize: 12.0),
+                            //           ),
+                            //           IconButton(
+                            //             onPressed: () => Navigator.pop(context),
+                            //             icon: Icon(Icons.cancel_outlined),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //       content: Container(
+                            //         width: 200,
+                            //         child: SingleChildScrollView(
+                            //           child: Column(
+                            //             mainAxisAlignment: MainAxisAlignment.start,
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.center,
+                            //             children: <Widget>[
+                            //               SizedBox(
+                            //                 height: height * 0.03,
+                            //               ),
+                            //               SizedBox(
+                            //                 height: 10,
+                            //               ),
+                            //               FlatButton(
+                            //                 color: Color(
+                            //                     Utils.hexStringToHexInt('77ACA2')),
+                            //                 textColor: Colors.white,
+                            //                 child: Text('OK'),
+                            //                 onPressed: () async {
+                            //                   showLoaderDialog(context);
+                            //                   // Map map = {
+                            //                   //   "session_id": box.read('session'),
+                            //                   // };
+                            //                   // print(map);
+                            //                   // var apiUrl = Uri.parse(
+                            //                   //     AppConstant.BASE_URL +
+                            //                   //         AppConstant.REFER_TO_FRIEND);
+                            //                   // print(apiUrl);
+                            //                   // print(map);
+                            //                   // final response = await http.post(
+                            //                   //   apiUrl,
+                            //                   //   body: map,
+                            //                   // );
+                            //                   // print(response.body);
+                            //                   // var data = response.body;
+                            //                   // final body =
+                            //                   //     json.decode(response.body);
+                            //                   // CommonDialog.showsnackbar(
+                            //                   //     body['message'] +
+                            //                   //         "your code is \n" +
+                            //                   //         body['referel_code']);
+                            //                   // Navigator.pop(context);
+                            //                   //
+                            //                   // showLoaderDialog(context);
+                            //                   // Share.share(
+                            //                   //     'Intall this app and get benifits ${body['referel_code']}',
+                            //                   //     subject: 'Kolacut!');
+                            //                 },
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       actions: <Widget>[],
+                            //     );
+                            //   },
+                            // );
+                            // Navigator.pop(context);
+                          },
+                          trailing: const Icon(Icons.keyboard_arrow_right),
+                        ),
                         const Divider(
                           height: 1.0,
                           color: Colors.grey,
@@ -288,12 +411,21 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                               height: height * 0.01,
                             ),
                             Center(
-                              child: Text(
-                                'Terms & Conditions',
-                                style: TextStyle(
-                                    color: Color(Utils.hexStringToHexInt('4285F4')),
-                                    fontFamily: 'Poppins Semibold',
-                                    fontSize: width * 0.03),
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => TermConditionPage()),
+                                  );
+                                },
+                                child: Text(
+                                  'Terms & Conditions',
+                                  style: TextStyle(
+                                      color: Color(Utils.hexStringToHexInt('4285F4')),
+                                      fontFamily: 'Poppins Semibold',
+                                      fontSize: width * 0.03),
+                                ),
                               ),
                             ),
                           ],

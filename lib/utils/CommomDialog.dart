@@ -46,6 +46,45 @@ class CommonDialog {
     Get.bottomSheet(ApplyLeave());
   }
 
+  static showErrorDialog1(
+      {String title = "Oops Error",
+        String description = "Something went wrong "}) {
+    Get.dialog(
+      Dialog(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: Get.textTheme.headline6,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 16),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (Get.isDialogOpen!) Get.back();
+                },
+                child: const Text("Okay"),
+              ),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+
   static showsnackbar(message) {
     Get.snackbar(
       "Kolacut Staff",

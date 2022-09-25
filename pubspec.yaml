@@ -53,10 +53,13 @@ dependencies:
   firebase_messaging: ^12.0.3
   flutter_local_notifications: ^9.8.0+1
   firebase_core:
-  webview_flutter: ^3.0.4
   charts_flutter: ^0.12.0
-
-
+  slider_button: ^2.0.0
+  flutter_speedometer: ^1.0.2
+  webview_flutter: ^3.0.4
+  share_plus: ^4.0.10
+  swipebuttonflutter: ^1.0.0
+  get_storage: ^2.0.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -86,6 +89,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/svgicons/
+    - images/svgicons/coin.png
     - images\svgicons\mappin.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

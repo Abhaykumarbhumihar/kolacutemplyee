@@ -45,7 +45,7 @@ class BookingController extends GetxController {
       // will be null if never previously saved
      // print("SDFKLDFKDKLFKDLFKLDFKL  "+"${_testValue}");
       getBookingList(_testValue);
-      getChart();
+     // getChart();
     });
 
   }

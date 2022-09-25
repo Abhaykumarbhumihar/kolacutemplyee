@@ -120,11 +120,11 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                       color: Colors.grey,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.only(left:6.0,right: 6.0),
                       child: Center(
                         child: SizedBox(
                           width: width,
-                          height: height * 0.5,
+                          height: height * 0.4,
                           child: TableCalendar(
                             focusedDay: focuseddaate,
                             firstDay: DateTime(2022),
@@ -376,7 +376,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                       child: recentleavelist(
                           width, height, context, leaveapplyController.data),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     )
                   ],

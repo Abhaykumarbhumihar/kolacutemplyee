@@ -93,7 +93,7 @@ class _GraphState extends State<Graph> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 20,
+                          height: 6,
                         ),
                         Center(
                           child: Text(
@@ -116,7 +116,7 @@ class _GraphState extends State<Graph> {
                           ),
                         ),
                         SizedBox(
-                          height: height * 0.06,
+                          height: height * 0.02,
                         ),
                         Material(
                           borderRadius: BorderRadius.circular(width * 0.04),
@@ -270,6 +270,66 @@ class _GraphState extends State<Graph> {
                                 ],
                               ),
                             ),
+                          ),
+                        ),
+                        Container(
+                          width: width,
+                          height: 30,
+                          margin: EdgeInsets.only(left: 6,right: 6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Row(children: <Widget>[
+                                Container(
+                                  width: 14,
+                                  height: 14,
+                                  color: Color(Utils.hexStringToHexInt('4285F4')),
+                                ),
+                                Text(" Completed  Orders  ",
+                                style: TextStyle(
+                                  fontFamily: '',
+                                  color:  Color(Utils.hexStringToHexInt('8D8D8D')),
+                                ),),
+                                Container(
+                                  width: 14,
+                                  height: 14,
+                                  color: Color(Utils.hexStringToHexInt('C4C4C4')),
+                                ),
+                                Text(" Total Orders  ",
+                                  style: TextStyle(
+                                    fontFamily: '',
+                                    color:  Color(Utils.hexStringToHexInt('8D8D8D')),
+                                  ),),
+                              ],),
+                              Container(
+                                width: 70,
+                                height: 30,
+                                child: Center(
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: TextField(
+                                        //textAlign: TextAlign.center,
+                                        autocorrect: true,
+                                        textAlign: TextAlign.center,
+                                        decoration:
+                                          InputDecoration(
+                                              hintText: 'Enter here days',
+                                            isCollapsed: false,
+                                            isDense: false,
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                              hintStyle: TextStyle(
+                                                  color:
+                                                  Color(Utils.hexStringToHexInt('A4A4A4')),
+                                                  fontFamily: 'Poppins Regular',
+                                                  fontSize: width * 0.03),
+                                            border: OutlineInputBorder(),)
+
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         Container(
