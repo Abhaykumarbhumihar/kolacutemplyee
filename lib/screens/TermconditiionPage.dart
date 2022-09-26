@@ -60,7 +60,7 @@ class _TermConditionPageState extends State<TermConditionPage> {
          actions: <Widget>[],
        ),
        body: WebView(
-         initialUrl: 'http://kolacut.kvpscampuscare.com/public/user-terms',
+         initialUrl: 'http://kolacut.kvpscampuscare.com/public/employee-terms',
          javascriptMode: JavascriptMode.disabled,
        ),
      ));

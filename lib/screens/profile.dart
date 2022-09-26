@@ -388,123 +388,81 @@ class _HomePageState extends State<ProfilePage> {
                             SizedBox(
                               height: height * 0.04,
                             ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: width * 0.06, right: width * 0.03),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Sara Blush',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: width * 0.03,
-                                        fontFamily: 'Poppins Medium'),
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      RatingBarIndicator(
-                                        rating: 2.75,
-                                        itemBuilder: (context, index) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
+                            ConstrainedBox(constraints: BoxConstraints(
+                              minHeight: 0.2,
+                              maxHeight: height * 0.5,
+                            ),
+                            child: ListView.builder(
+                              itemCount: profileController.feedbackPojo.value.ratingDetail!.length,
+
+                              itemBuilder: (context,position){
+                              return Container(
+                                margin: EdgeInsets.only(
+                                    left: width * 0.06, right: width * 0.03),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Sara Blush',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: width * 0.03,
+                                          fontFamily: 'Poppins Medium'),
+                                    ),
+
+                                    Row(
+                                      children: <Widget>[
+                                        RatingBarIndicator(
+                                          rating: double.parse( "${profileController.feedbackPojo.value.ratingDetail![position].rating}",
+                                          ),
+                                          itemBuilder: (context, index) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          itemCount: 5,
+                                          itemSize: width * 0.05,
+                                          direction: Axis.horizontal,
                                         ),
-                                        itemCount: 5,
-                                        itemSize: width * 0.05,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      Text(
-                                        ' 11/5/21',
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins Regular',
-                                            fontSize: width * 0.02,
-                                            color: Color(
-                                                Utils.hexStringToHexInt('C4C4C4'))),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  AutoSizeText(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim facilisi rhoncus, vitae, id convallis eu nisl enim quam. Sed aenean molestie leo venenatis. Aliquet turpis nulla sodales aenean. Bibendum ut egestas massa sit.',
-                                    style: TextStyle(
-                                        fontSize: width * 0.02,
-                                        color:
-                                        Color(Utils.hexStringToHexInt('#8D8D8D')),
-                                        fontFamily: 'Poppins Light'),
-                                    maxLines: 5,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Divider(
-                                    color: Color(Utils.hexStringToHexInt('C4C4C4')),
-                                    thickness: 1,
-                                  )
-                                ],
-                              ),
+                                        Text(
+                                          ' 11/5/21',
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins Regular',
+                                              fontSize: width * 0.02,
+                                              color: Color(
+                                                  Utils.hexStringToHexInt('C4C4C4'))),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    AutoSizeText(
+                                      "${profileController.feedbackPojo.value.ratingDetail![position].comment}",
+                                      style: TextStyle(
+                                          fontSize: width * 0.02,
+                                          color:
+                                          Color(Utils.hexStringToHexInt('#8D8D8D')),
+                                          fontFamily: 'Poppins Light'),
+                                      maxLines: 5,
+                                    ),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    Divider(
+                                      color: Color(Utils.hexStringToHexInt('C4C4C4')),
+                                      thickness: 1,
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                            ),
+
                             ),
                             SizedBox(
                               height: height * 0.02,
                             ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  left: width * 0.06, right: width * 0.03),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Sara Blush',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: width * 0.03,
-                                        fontFamily: 'Poppins Medium'),
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      RatingBarIndicator(
-                                        rating: 2.75,
-                                        itemBuilder: (context, index) => const Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        itemCount: 5,
-                                        itemSize: width * 0.05,
-                                        direction: Axis.horizontal,
-                                      ),
-                                      Text(
-                                        ' 11/5/21',
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins Regular',
-                                            fontSize: width * 0.02,
-                                            color: Color(
-                                                Utils.hexStringToHexInt('C4C4C4'))),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  AutoSizeText(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim facilisi rhoncus, vitae, id convallis eu nisl enim quam. Sed aenean molestie leo venenatis. Aliquet turpis nulla sodales aenean. Bibendum ut egestas massa sit.',
-                                    style: TextStyle(
-                                        fontSize: width * 0.02,
-                                        color:
-                                        Color(Utils.hexStringToHexInt('#8D8D8D')),
-                                        fontFamily: 'Poppins Light'),
-                                    maxLines: 5,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Divider(
-                                    color: Color(Utils.hexStringToHexInt('C4C4C4')),
-                                    thickness: 1,
-                                  )
-                                ],
-                              ),
-                            )
+
                           ],
                         ),
                       ],

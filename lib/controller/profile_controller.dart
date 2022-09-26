@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+import '../model/FeedbackPojo.dart';
 import '../model/ProfilePojo.dart';
 import '../services/ApiCall.dart';
 import '../utils/CommomDialog.dart';
@@ -10,6 +11,7 @@ import '../utils/appconstant.dart';
 
 class ProfileController extends GetxController {
   var profilePojo = ProfilePojo().obs;
+  var feedbackPojo=FeedbackPojo().obs;
   var lodaer = true;
   late SharedPreferences sharedPreferences;
   @override
@@ -43,7 +45,6 @@ class ProfileController extends GetxController {
 
 
 
-//session_id:PqtoOdpQ0SBVTMT0a15gnT7euR9x8fO6
   void getProfile(session_id) async {
     Map map;
     map = {"session_id": session_id};
@@ -54,6 +55,33 @@ class ProfileController extends GetxController {
       print(response);
       CommonDialog.hideLoading();
       profilePojo.value = profilePojoFromJson(response);
+      if (profilePojo.value.message == "No Data found") {
+        CommonDialog.showsnackbar("No Data found");
+      } else {
+        // Get.to(const VerifyOtpPage());
+        getFeedback(session_id);
+        update();
+
+        //lodaer = false;
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+      CommonDialog.hideLoading();
+    }
+  }
+
+  void getFeedback(session_id) async {
+    Map map;
+    map = {"session_id": session_id};
+    try {
+      CommonDialog.showLoading(title: "Please waitt...");
+      final response =
+      await APICall().registerUrse(map, AppConstant.GET_FEEDBACK);
+      print(response);
+      CommonDialog.hideLoading();
+      feedbackPojo.value = feedbackPojoFromJson(response);
       if (profilePojo.value.message == "No Data found") {
         CommonDialog.showsnackbar("No Data found");
       } else {

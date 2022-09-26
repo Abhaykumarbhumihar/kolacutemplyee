@@ -9,5 +9,6 @@
    static const String GET_ALL_BOOKING="public/api/bookings";
    static const String ACCEPT_BOOKING="public/api/accept-booking-delivery";
    static const String COMPLETE_BOOKIND="public/api/booking-completed";
+   static const String GET_FEEDBACK="public/api/employee-rating";
 
  }
