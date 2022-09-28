@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:kolacut_employee/model/Dashboardpojo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/AcceptBookigPojo.dart';
 import '../model/AllBookingPojoo.dart';
@@ -19,6 +20,7 @@ class BookingController extends GetxController {
   var acceptBookingPojo=AcceptBookigPojo().obs;
   late SharedPreferences sharedPreferences;
   var graphPojo = Graphpojjo().obs;
+  var dashboardData=Dashboardpojo().obs;
   void getData()async{
     final prefs = await SharedPreferences.getInstance();
 
@@ -45,7 +47,8 @@ class BookingController extends GetxController {
       // will be null if never previously saved
      // print("SDFKLDFKDKLFKDLFKLDFKL  "+"${_testValue}");
       getBookingList(_testValue);
-      getChart();
+      getChart("365");
+      getdashboard(_testValue);
     });
 
   }
@@ -133,12 +136,12 @@ class BookingController extends GetxController {
 
     }
   }
-  void getChart() async {
+  void getChart(days) async {
     Map map;
     try {
      // CommonDialog.showLoading(title: "Please waitt...");
       final response =
-      await APICall().registerUrseWithoutbody("public/api/get-data");
+      await APICall().registerUrseWithoutbody("public/api/get-data",days);
       print(response);
       CommonDialog.hideLoading();
       if (response != "null") {
@@ -148,7 +151,6 @@ class BookingController extends GetxController {
       //  lodaer = false;
       } else {
         print("CODE IS RUNNING HERE");
-
       }
     } catch (error) {
       if (kDebugMode) {
@@ -185,4 +187,29 @@ class BookingController extends GetxController {
       CommonDialog.hideLoading();
     }
   }
+  void getdashboard(_testValue) async {
+    Map map;
+    map = {"session_id": _testValue};
+    //map = {"session_id": "TXKe48DXicKoAjkyEOgXWqU3VuVZqdHm"};
+    print("API HIT HIT HIT HIT");
+    try {
+      CommonDialog.showLoading(title: "Please waitt...");
+      final response = await APICall().registerUrse(map, AppConstant.DASHBOARD_DATA);
+      print(response);
+      if (response == "null") {
+        //   print(response);
+        CommonDialog.hideLoading();
+        CommonDialog.showsnackbar("No Data found");
+      } else {
+        CommonDialog.hideLoading();
+        dashboardData.value = dashboardpojoFromJson(response);
+        update();
+        lodaer = false;
+      }
+    } catch (error) {
+      print(error);
+      CommonDialog.hideLoading();
+    }
+  }
+
 }

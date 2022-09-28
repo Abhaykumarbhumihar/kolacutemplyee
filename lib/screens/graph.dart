@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kolacut_employee/controller/BookingController.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:kolacut_employee/utils/CommomDialog.dart';
 
 import '../utils/Utils.dart';
 import 'dart:io';
@@ -46,6 +47,7 @@ class _GraphState extends State<Graph> {
     var height = MediaQuery.of(context).size.height;
     return SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
@@ -78,11 +80,11 @@ class _GraphState extends State<Graph> {
                     dashboardController.graphPojo.value.data![i].completedOrder;
                     dashboardController.graphPojo.value.data![i].totalOrder;
                     globalSalesData.add(OrdinalSales(
-                        'JAIN$i',
+                        dashboardController.graphPojo.value.data![i].Month!,
                         dashboardController
                             .graphPojo.value.data![i].totalOrder!));
                     losAngeles.add(OrdinalSales(
-                        'JAIN$i',
+                        '${dashboardController.graphPojo.value.data![i].Month}',
                         dashboardController
                             .graphPojo.value.data![i].completedOrder!));
                     //OrdinalSales('JAIN',  dashboardController.graphPojo.value.data![i].completedOrder!);
@@ -90,7 +92,9 @@ class _GraphState extends State<Graph> {
                   return Container(
                     width: width,
                     height: height,
-                    child: Column(
+                    child:
+                  SingleChildScrollView(
+                    child:  Column(
                       children: <Widget>[
                         SizedBox(
                           height: 6,
@@ -101,17 +105,17 @@ class _GraphState extends State<Graph> {
                             style: TextStyle(
                                 fontFamily: 'Poppins Medium',
                                 fontSize:
-                                    MediaQuery.of(context).size.height * 0.03,
+                                MediaQuery.of(context).size.height * 0.03,
                                 color: Colors.black),
                           ),
                         ),
                         Center(
                           child: Text(
-                            'Rs 1000',
+                            'Rs ${dashboardController.dashboardData.value.data![0].totalEarnings}',
                             style: TextStyle(
                                 fontFamily: 'Poppins Medium',
                                 fontSize:
-                                    MediaQuery.of(context).size.height * 0.03,
+                                MediaQuery.of(context).size.height * 0.03,
                                 color: Colors.black),
                           ),
                         ),
@@ -128,7 +132,7 @@ class _GraphState extends State<Graph> {
                             height: height * 0.2,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.circular(width * 0.04),
+                                BorderRadius.circular(width * 0.04),
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
@@ -141,35 +145,35 @@ class _GraphState extends State<Graph> {
                               margin: EdgeInsets.only(left: 12, right: 12),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
                                             'Order Received',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            '${dashboardController.element.length} ',
+                                            '${dashboardController.dashboardData.value.data![0].orderReceved}',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           )
@@ -177,27 +181,27 @@ class _GraphState extends State<Graph> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
                                             'Completed Orders ',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            '0 ',
+                                            '${dashboardController.dashboardData.value.data![0].completedOrder} ',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           )
@@ -207,31 +211,31 @@ class _GraphState extends State<Graph> {
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
                                             'Total Earnings ',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            "0",
+                                            "${dashboardController.dashboardData.value.data![0].totalEarnings}",
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           )
@@ -239,27 +243,27 @@ class _GraphState extends State<Graph> {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Text(
                                             'Monthly Earnings ',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            '0',
+                                            '${dashboardController.dashboardData.value.data![0].orderReceved}',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.02 -
+                                                    .size
+                                                    .height *
+                                                    0.02 -
                                                     height * 0.003,
                                                 color: Colors.white),
                                           )
@@ -287,10 +291,10 @@ class _GraphState extends State<Graph> {
                                   color: Color(Utils.hexStringToHexInt('4285F4')),
                                 ),
                                 Text(" Completed  Orders  ",
-                                style: TextStyle(
-                                  fontFamily: '',
-                                  color:  Color(Utils.hexStringToHexInt('8D8D8D')),
-                                ),),
+                                  style: TextStyle(
+                                    fontFamily: '',
+                                    color:  Color(Utils.hexStringToHexInt('8D8D8D')),
+                                  ),),
                                 Container(
                                   width: 14,
                                   height: 14,
@@ -309,21 +313,34 @@ class _GraphState extends State<Graph> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: TextField(
-                                        //textAlign: TextAlign.center,
+                                      //textAlign: TextAlign.center,
                                         autocorrect: true,
                                         textAlign: TextAlign.center,
+                                        keyboardType: TextInputType.phone,
+                                        onEditingComplete: () { print("editing complete"); },
+                                        onSubmitted: (String value) { print("submitted\n$value");
+                                        if(int.parse(value)<365){
+                                          bookingController.getChart(value);
+                                          FocusScope.of(context).unfocus();
+
+                                        }else{
+                                          CommonDialog.showsnackbar("You can get only one year data");
+                                        }
+
+                                        },
+                                        maxLines: 1,
                                         decoration:
-                                          InputDecoration(
-                                              hintText: 'Enter here days',
-                                            isCollapsed: false,
-                                            isDense: false,
-                                            contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                                              hintStyle: TextStyle(
-                                                  color:
-                                                  Color(Utils.hexStringToHexInt('A4A4A4')),
-                                                  fontFamily: 'Poppins Regular',
-                                                  fontSize: width * 0.03),
-                                            border: OutlineInputBorder(),)
+                                        InputDecoration(
+                                          hintText: 'Enter here days',
+                                          isCollapsed: false,
+                                          isDense: false,
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                          hintStyle: TextStyle(
+                                              color:
+                                              Color(Utils.hexStringToHexInt('A4A4A4')),
+                                              fontFamily: 'Poppins Regular',
+                                              fontSize: width * 0.03),
+                                          border: OutlineInputBorder(),)
 
                                     ),
                                   ),
@@ -362,6 +379,7 @@ class _GraphState extends State<Graph> {
                         )
                       ],
                     ),
+                  ),
                   );
                 }
               },

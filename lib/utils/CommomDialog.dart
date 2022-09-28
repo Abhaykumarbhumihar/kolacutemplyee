@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../screens/applyleave.dart';
+import 'Utils.dart';
 
 
 class CommonDialog {
@@ -47,6 +48,7 @@ class CommonDialog {
   }
 
   static showErrorDialog1(
+  width,context,
       {String title = "Oops Error",
         String description = "Something went wrong "}) {
     Get.dialog(
@@ -54,21 +56,154 @@ class CommonDialog {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(4.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: <Widget>[
+              //     GestureDetector(
+              //       onTap: () {
+              //         if (Get.isDialogOpen!) Get.back();
+              //
+              //       },
+              //       child: Container(
+              //         margin: EdgeInsets.all(width * 0.06),
+              //         child: IconButton(
+              //           iconSize: 34,
+              //           icon: Icon(
+              //             Icons.close,
+              //             color: Color(Utils.hexStringToHexInt('4285F4')),
+              //           ),
+              //           // the method which is called
+              //           // when button is pressed
+              //           onPressed: () {
+              //             Navigator.pop(context);
+              //
+              //           },
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
               Text(
                 title,
-                style: Get.textTheme.headline6,
+                style:TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Poppins Medium',
+                    fontSize: MediaQuery.of(context).size.width * 0.04),
               ),
               const SizedBox(
                 height: 15,
               ),
+              Flexible(
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Poppins Medium',
+                      fontSize: MediaQuery.of(context).size.width * 0.04),
+                ),
+              ),
               Text(
-                description,
+                'How it work?',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Poppins Medium',
+                    fontSize: MediaQuery.of(context).size.width * 0.04),
+              ),
+              Row(
+                children: <Widget>[
+
+                  Center(
+                    child: IconButton(
+                      iconSize: 34,
+                      icon: Icon(
+                        Icons.account_circle_rounded,
+                        color: Color(Utils.hexStringToHexInt('4285F4')),
+                      ),
+                      // the method which is called
+                      // when button is pressed
+                      onPressed: () {
+                        // Navigator.pop(context);
+
+                      },
+                    ),
+                  ),
+                  
+                  Flexible(
+                    child: Text(
+                      'Your firend sign up with the same link',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins Medium',
+                          fontSize: MediaQuery.of(context).size.width * 0.04),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+
+                  Center(
+                    child: IconButton(
+                      iconSize: 34,
+                      icon: Icon(
+                        Icons.share,
+                        color: Color(Utils.hexStringToHexInt('4285F4')),
+                      ),
+                      // the method which is called
+                      // when button is pressed
+                      onPressed: () {
+                        // Navigator.pop(context);
+
+                      },
+                    ),
+                  ),
+                  Text(
+                    'How it work?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Poppins Medium',
+                        fontSize: MediaQuery.of(context).size.width * 0.04),
+                  ),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+
+                  Center(
+                    child: IconButton(
+                      iconSize: 34,
+                      icon: Icon(
+                        Icons.card_giftcard_outlined,
+                        color: Color(Utils.hexStringToHexInt('4285F4')),
+                      ),
+                      // the method which is called
+                      // when button is pressed
+                      onPressed: () {
+                        // Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      'Your fried gets 500 coins on sign up.you get 500 coins after completion of service within 30 days.'
+                          'You can earn uptp 5000 coins which will be converted into rupees',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Poppins Medium',
+                          fontSize: MediaQuery.of(context).size.width * 0.04),
+                    ),
+                  ),
+                ],
               ),
               ElevatedButton(
                 onPressed: () {

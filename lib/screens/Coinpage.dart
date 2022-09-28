@@ -171,7 +171,7 @@ class _CoinPageState extends State<CoinPage> {
                           InkWell(
                             onTap: () {
                               CommonDialog.showErrorDialog1(
-                                  title: "Coins Detail",
+                                width, context, title: "Coins Detail",
                                   description:
                                   "You have earn coin with app refer, you can use only 100 coin at a time.");
                             },
@@ -470,7 +470,7 @@ class _CoinPageState extends State<CoinPage> {
             ),
             content: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7+height*0.05,
+              height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey, width: 2),
@@ -647,101 +647,7 @@ class _CoinPageState extends State<CoinPage> {
                           },
                         ),
                       ),
-                      Text(
-                        'How it work?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins Medium',
-                            fontSize: MediaQuery.of(context).size.width * 0.04),
-                      ),
-                      Row(
-                        children: <Widget>[
 
-                          Center(
-                            child: IconButton(
-                              iconSize: 34,
-                              icon: Icon(
-                                Icons.account_circle_rounded,
-                                color: Color(Utils.hexStringToHexInt('4285F4')),
-                              ),
-                              // the method which is called
-                              // when button is pressed
-                              onPressed: () {
-                                // Navigator.pop(context);
-
-                              },
-                            ),
-                          ),
-                          Text(
-                            'Your firend sign up with the same link',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Poppins Medium',
-                                fontSize: MediaQuery.of(context).size.width * 0.04),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-
-                          Center(
-                            child: IconButton(
-                              iconSize: 34,
-                              icon: Icon(
-                                Icons.share,
-                                color: Color(Utils.hexStringToHexInt('4285F4')),
-                              ),
-                              // the method which is called
-                              // when button is pressed
-                              onPressed: () {
-                                // Navigator.pop(context);
-
-                              },
-                            ),
-                          ),
-                          Text(
-                            'How it work?',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Poppins Medium',
-                                fontSize: MediaQuery.of(context).size.width * 0.04),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-
-                          Center(
-                            child: IconButton(
-                              iconSize: 34,
-                              icon: Icon(
-                                Icons.card_giftcard_outlined,
-                                color: Color(Utils.hexStringToHexInt('4285F4')),
-                              ),
-                              // the method which is called
-                              // when button is pressed
-                              onPressed: () {
-                                // Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              'Your fried gets 500 coins on sign up.you get 500 coins after completion of service within 30 days.'
-                                  'You can earn uptp 5000 coins which will be converted into rupees',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Poppins Medium',
-                                  fontSize: MediaQuery.of(context).size.width * 0.04),
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   )
                 ],

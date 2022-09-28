@@ -403,7 +403,7 @@ class _HomePageState extends State<ProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'Sara Blush',
+                                      '${profileController.feedbackPojo.value.ratingDetail![position].user_name}',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: width * 0.03,
@@ -424,7 +424,7 @@ class _HomePageState extends State<ProfilePage> {
                                           direction: Axis.horizontal,
                                         ),
                                         Text(
-                                          ' 11/5/21',
+                                          ' ${profileController.feedbackPojo.value.ratingDetail![position].date}',
                                           style: TextStyle(
                                               fontFamily: 'Poppins Regular',
                                               fontSize: width * 0.02,
