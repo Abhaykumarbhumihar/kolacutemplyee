@@ -111,7 +111,7 @@ class _GraphState extends State<Graph> {
                         ),
                         Center(
                           child: Text(
-                            'Rs ${dashboardController.dashboardData.value.data![0].totalEarnings}',
+                            '₹ ${dashboardController.dashboardData.value.data![0].totalEarnings}',
                             style: TextStyle(
                                 fontFamily: 'Poppins Medium',
                                 fontSize:
@@ -229,7 +229,7 @@ class _GraphState extends State<Graph> {
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            "${dashboardController.dashboardData.value.data![0].totalEarnings}",
+                                            "₹ ${dashboardController.dashboardData.value.data![0].totalEarnings}",
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)
@@ -257,7 +257,7 @@ class _GraphState extends State<Graph> {
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            '${dashboardController.dashboardData.value.data![0].orderReceved}',
+                                            '₹ ${dashboardController.dashboardData.value.data![0].orderReceved}',
                                             style: TextStyle(
                                                 fontFamily: 'Poppins Semibold',
                                                 fontSize: MediaQuery.of(context)

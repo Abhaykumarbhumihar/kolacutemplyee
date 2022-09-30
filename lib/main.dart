@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -141,7 +142,12 @@ void main() async {
 //     } /*TODO-- pass rote here*/
 //     //  _homepage = TwilioPhoneNumberInput();
 //   });
-  runApp(MyApp(session: session));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp(session: session));
+  });
+
 }
 
 class MyApp extends StatelessWidget {

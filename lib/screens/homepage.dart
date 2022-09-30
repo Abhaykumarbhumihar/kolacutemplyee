@@ -294,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                                     Positioned(
                                       top: height * 0.01,
                                       child: Text(
-                                        '0',
+                                        '₹ ${bookingController.dashboardData.value.data![0].totalEarnings}',
                                         style: TextStyle(
                                             fontFamily: 'Poppins Semibold',
                                             fontSize: MediaQuery.of(context)

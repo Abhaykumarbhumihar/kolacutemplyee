@@ -218,7 +218,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                                       ),
                                     ),
                                   ),
-                                  barrierDismissible: false,
+                                 // barrierDismissible: false,
                                 );
                               }else{
                                 CommonDialog.showsnackbar("No data found for this date");
@@ -628,16 +628,22 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                     ),
                     Container(
                       margin: EdgeInsets.only(right: width * 0.02),
-                      child: Column(
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           Text(
-                            '',
+                            '${data[position].startFrom}-'
+                                '${data[position].endFrom}  ',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: width * 0.01,
-                                fontFamily: 'Poppins Medium'),
+                                color: Color(
+                                    Utils.hexStringToHexInt(
+                                        '8D8D8D')),
+                                fontFamily:
+                                'Poppins Regular',
+                                fontSize:
+                                width *
+                                    0.02),
                           ),
                           Container(
                             margin: EdgeInsets.only(right: width * 0.02),

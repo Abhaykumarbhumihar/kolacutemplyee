@@ -6,6 +6,7 @@ import 'package:kolacut_employee/model/Dashboardpojo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/AcceptBookigPojo.dart';
 import '../model/AllBookingPojoo.dart';
+import '../model/CoinPojo.dart';
 import '../model/Graphpojjo.dart';
 import '../services/ApiCall.dart';
 import '../utils/CommomDialog.dart';
@@ -19,6 +20,8 @@ class BookingController extends GetxController {
   List<SlotDetail> element = [];
   var acceptBookingPojo=AcceptBookigPojo().obs;
   late SharedPreferences sharedPreferences;
+  var coinPojo = CoinPojo().obs;
+  int coin = 0;
   var graphPojo = Graphpojjo().obs;
   var dashboardData=Dashboardpojo().obs;
   void getData()async{
@@ -49,10 +52,36 @@ class BookingController extends GetxController {
       getBookingList(_testValue);
       getChart("365");
       getdashboard(_testValue);
+      getCoin(_testValue);
     });
 
   }
+  void getCoin(session_id) async {
+    Map map;
+    map = {"session_id": "$session_id"};
+    try {
+      // CommonDialog.showLoading(title: "Please waitt...");
+      // lodaer=true;
+      final response = await APICall().registerUrse(map, AppConstant.COIN);
+        print(response);
+      //print("COIND data ");
+      if (coinPojo.value.message == "No Data found") {
+        //   CommonDialog.hideLoading();
+        //  CommonDialog.showsnackbar("No Data found");
+      } else {
+        //  CommonDialog.hideLoading();
+        coinPojo.value = coinPojoFromJson(response);
+        if (coinPojo.value.coin != null) {
+          coin = coinPojo.value.coin!;
+          update();
+        }
+        update();
 
+      }
+    } catch (error) {
+      //CommonDialog.hideLoading();
+    }
+  }
   void acceptBooking(bookingId) async {
     print("Session iodd"+"${sessionId.value}");
     Map map;
@@ -141,7 +170,7 @@ class BookingController extends GetxController {
     try {
      // CommonDialog.showLoading(title: "Please waitt...");
       final response =
-      await APICall().registerUrseWithoutbody("public/api/get-data",days);
+      await APICall().registerUrseWithoutbody("public/api/get-employee-data",days,sessionId.value);
       print(response);
       CommonDialog.hideLoading();
       if (response != "null") {

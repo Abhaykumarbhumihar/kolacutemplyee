@@ -11,5 +11,6 @@
    static const String COMPLETE_BOOKIND="public/api/booking-completed";
    static const String GET_FEEDBACK="public/api/employee-rating";
    static const String DASHBOARD_DATA="public/api/employee-dashboard";
+   static const String COIN="public/api/get-employee-coin";
 
  }
