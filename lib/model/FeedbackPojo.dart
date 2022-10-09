@@ -46,7 +46,7 @@ class RatingDetail {
   });
 
   int? id;
-  String? rating;
+  int? rating;
   String? comment;
   String?user_name;
   String?date;
