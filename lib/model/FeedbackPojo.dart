@@ -45,6 +45,7 @@ class RatingDetail {
     this.date,
   });
 
+
   int? id;
   int? rating;
   String? comment;
