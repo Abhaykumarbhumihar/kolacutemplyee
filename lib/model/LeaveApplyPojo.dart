@@ -22,13 +22,13 @@ class LeaveApplyPojo {
   factory LeaveApplyPojo.fromJson(Map<String, dynamic> json) => LeaveApplyPojo(
     status: json["status"],
     message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: List<Datum>.from(json["Leave Detail"].map((x) => Datum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    "Leave Detail": List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 

@@ -440,9 +440,9 @@ class _ApplyLeaveState extends State<ApplyLeave> {
       // print(
       //     "${openingTime.hour}:${openingTime.minute}  ${openingTime.period.toString().split('.')[1]}");
       var start =
-          "${openingTime.hour}:${openingTime.minute}  ${openingTime.period.toString().split('.')[1]}";
+          "${openingTime.hour}:${openingTime.minute} ${openingTime.period.toString().split('.')[1]}";
       var close =
-          "${closingTime.hour}:${closingTime.minute}:${closingTime.period.toString().split('.')[1].toString()}";
+          "${closingTime.hour}:${closingTime.minute} ${closingTime.period.toString().split('.')[1].toString()}";
       // print(radioItem + "  " + id.toString());
 //session_id, date, leavetype, starttime, endtime, reason
       // print(holidayItem + "  " + holidayid.toString());

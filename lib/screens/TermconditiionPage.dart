@@ -59,9 +59,12 @@ class _TermConditionPageState extends State<TermConditionPage> {
          ),
          actions: <Widget>[],
        ),
-       body: WebView(
-         initialUrl: 'http://kolacut.kvpscampuscare.com/public/employee-terms',
-         javascriptMode: JavascriptMode.disabled,
+       body: Container(
+         margin: EdgeInsets.only(bottom: 12),
+         child: WebView(
+           initialUrl: 'http://kolacut.kvpscampuscare.com/public/employee-terms',
+           javascriptMode: JavascriptMode.disabled,
+         ),
        ),
      ));
   }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import '../utils/Utils.dart';
@@ -22,6 +23,9 @@ class HomeBottomBar extends StatefulWidget {
 
 class _HomeBottomBarState extends State<HomeBottomBar> {
   var index = 0;
+  var image="";
+  late SharedPreferences sharedPreferences;
+
   final PersistentTabController _controller =
   PersistentTabController(initialIndex: 0);
 
@@ -64,16 +68,37 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
     //     inactiveColorPrimary: CupertinoColors.systemGrey,
     //   ),
       PersistentBottomNavBarItem(
-        icon: const Icon(
-          CupertinoIcons.profile_circled,
-          size: 30,
+        icon: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          backgroundImage:NetworkImage(image),
+          radius: 30.0,
         ),
         activeColorPrimary: Color(Utils.hexStringToHexInt('4285F4')),
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
     ];
   }
+  getImage()async{
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      sharedPreferences = sp;
+     // var _testValue = sharedPreferences.getString("name");
+     // var emailValue = sharedPreferences.getString("email");
+      var _imageValue = sharedPreferences.getString("image");
+    //  var _phoneValue = sharedPreferences.getString("phoneno");
+     // var _sessss = sharedPreferences.getString("session");
+      setState(() {
+        if (_imageValue != null) {
+          image = _imageValue;
+        } else {
+          image="";
+        }
 
+        //  print(name+" "+email+" "+phone+" "+_imageValue);
+      });
+      // will be null if never previously saved
+      // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -161,6 +186,7 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    getImage();
     return PersistentTabView(
       context,
       controller: _controller,

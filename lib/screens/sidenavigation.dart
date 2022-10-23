@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:kolacut_employee/screens/profile.dart';
 
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,72 +76,81 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                                 Center(
                                   child: Row(
                                     children: [
-                                      Container(
-                                        margin:
-                                        EdgeInsets.only(left: 6.0, right: 6.0),
-                                        height: height * 0.1,
-                                        child: Center(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Center(
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                    child: SizedBox.fromSize(
-                                                      size: Size.fromRadius(35),
-                                                      child: Image.network(
-                                                        "${widget.s1}",
-                                                        fit: BoxFit.cover,
+                                      InkWell(
+                                        onTap: (){
+                                          print("SDFDSFDSDSF");
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => ProfilePage()),
+                                          );
+                                        },
+                                        child: Container(
+                                          margin:
+                                          EdgeInsets.only(left: 6.0, right: 6.0),
+                                          height: height * 0.1,
+                                          child: Center(
+                                            child: Row(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Center(
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                      BorderRadius.circular(10.0),
+                                                      child: SizedBox.fromSize(
+                                                        size: Size.fromRadius(35),
+                                                        child: Image.network(
+                                                          "${widget.s1}",
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                SizedBox(
+                                                  width: 4.0,
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      "${widget.s}",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: width * 0.04,
+                                                        fontFamily: 'Poppins Regular',
                                                       ),
                                                     ),
-                                                  )),
-                                              SizedBox(
-                                                width: 4.0,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text(
-                                                    "${widget.s}",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: width * 0.04,
-                                                      fontFamily: 'Poppins Regular',
+                                                    Text(
+                                                      "${widget.s2}",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: width * 0.02,
+                                                        fontFamily: 'Poppins Regular',
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    "${widget.s2}",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: width * 0.02,
-                                                      fontFamily: 'Poppins Regular',
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "${widget.s3}",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: width * 0.02,
-                                                      fontFamily: 'Poppins Regular',
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 8.0, left: 4.0),
-                                                child: Image.asset(
-                                                  'images/svgicons/edit.png',
-                                                  width: 12,
-                                                  height: 12,
+                                                    Text(
+                                                      "${widget.s3}",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: width * 0.02,
+                                                        fontFamily: 'Poppins Regular',
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                              )
-                                            ],
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 8.0, left: 4.0),
+                                                  child: Image.asset(
+                                                    'images/svgicons/edit.png',
+                                                    width: 12,
+                                                    height: 12,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -242,8 +252,8 @@ class _SideNavigatinPageState extends State<SideNavigatinPage> {
                             color:  Color(Utils.hexStringToHexInt('4285F4')),
                           ),
                           title: const Text(' Refer To Earm '),
-                          subtitle: const Text(
-                              ' You will get 50 coin on first order of your firend '),
+                          // subtitle: const Text(
+                          //     ' You will get 50 coin on first order of your firend '),
                           onTap: () async {
                             Navigator.pop(context);
                             // CommonDialog.showLoading(title: "Please wait");

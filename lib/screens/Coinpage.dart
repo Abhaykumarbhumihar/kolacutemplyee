@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:flutter_speedometer/flutter_speedometer.dart';
 import 'package:swipebuttonflutter/swipebuttonflutter.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../utils/CommomDialog.dart';
 import '../utils/Utils.dart';
 import '../utils/appconstant.dart';
@@ -186,24 +187,11 @@ class _CoinPageState extends State<CoinPage> {
                           ),
 
                           Center(
-                            child: Speedometer(
-                              backgroundColor: Colors.white,
-                              size: 250,
-                              minValue: 0,
-                              maxValue: 1000,
-                              currentValue:
-                              homecontroller.coinPojo.value.coin,
-                              warningValue: 150,
-                              displayText: 'Coins',
-                              meterColor: Color(
-                                  Utils.hexStringToHexInt('4285F4')),
-                              warningColor: Color(
-                                  Utils.hexStringToHexInt('4285F4')),
-                              kimColor: Colors.amberAccent,
-                              //                             width: 1)),,
-                              //                             width: 1)),,
-                            ),
+                            child: SizedBox(
+                                width: width*0.7,
+                                child: Center(child: _getRadialGauge(homecontroller.coinPojo.value.coin))),
                           ),
+
 
                           SizedBox(
                             height: height * 0.03,
@@ -265,6 +253,55 @@ class _CoinPageState extends State<CoinPage> {
                 );
               }
             })));
+  }
+
+
+  Widget _getRadialGauge(value) {
+    return SfRadialGauge(
+        title: GaugeTitle(
+            text: '',
+            textStyle:
+            const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+        axes: <RadialAxis>[
+          RadialAxis(minimum: 0, maximum: 1000, ranges: <GaugeRange>[
+            GaugeRange(
+                startValue: 0,
+                endValue: 1000,
+                color: Color(Utils.hexStringToHexInt('77ACA2')),
+                startWidth: 10,
+                endWidth: 10),
+            // GaugeRange(
+            //     startValue: 50,
+            //     endValue: 100,
+            //     color: Colors.orange,
+            //     startWidth: 10,
+            //     endWidth: 10),
+            // GaugeRange(
+            //     startValue: 100,
+            //     endValue: 150,
+            //     color: Colors.red,
+            //     startWidth: 10,
+            //     endWidth: 10)
+          ], pointers: <GaugePointer>[
+            NeedlePointer(
+                value: double.parse(value.toString()),
+                needleLength: 0.65,
+                enableAnimation: true,
+                animationType: AnimationType.slowMiddle,
+                needleStartWidth: 1.5,
+                needleEndWidth: 8,
+                needleColor: Colors.red.shade300,
+                knobStyle: KnobStyle(knobRadius: 0.09,borderColor: Colors.red))
+          ], annotations: <GaugeAnnotation>[
+            GaugeAnnotation(
+                widget: Container(
+                    child:  Text('${value}',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold))),
+                angle: 90,
+                positionFactor: 0.5)
+          ])
+        ]);
   }
 
   showLoaderDialog1(BuildContext context, code) {
@@ -469,6 +506,8 @@ class _CoinPageState extends State<CoinPage> {
             ),
             content: Container(
               width: MediaQuery.of(context).size.width,
+              height: height*0.6,
+
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey, width: 2),

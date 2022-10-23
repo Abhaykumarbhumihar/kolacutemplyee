@@ -377,7 +377,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                           width, height, context, leaveapplyController.data),
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 28,
                     )
                   ],
                 ),
@@ -547,7 +547,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
         itemBuilder: (context, position) {
           return Container(
             margin: EdgeInsets.only(
-                left: width * 0.04, right: width * 0.04, top: 2, bottom: 2),
+                left: width * 0.04, right: width * 0.04, top: 2, bottom: 10),
             child: Material(
               borderRadius: BorderRadius.circular(4),
               elevation: 4,
