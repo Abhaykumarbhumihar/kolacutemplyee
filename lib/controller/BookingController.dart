@@ -19,7 +19,7 @@ class BookingController extends GetxController {
   var sessionId="".obs;
   List<SlotDetail> element = [];
   var acceptBookingPojo=AcceptBookigPojo().obs;
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   var coinPojo = CoinPojo().obs;
   int coin = 0;
   var graphPojo = Graphpojjo().obs;
@@ -28,7 +28,7 @@ class BookingController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
 
     var session = prefs.getString('session');
-    sessionId.value=session!;
+    sessionId.value=session;
     update();
   }
 
@@ -71,8 +71,8 @@ class BookingController extends GetxController {
       } else {
         //  CommonDialog.hideLoading();
         coinPojo.value = coinPojoFromJson(response);
-        if (coinPojo.value.coin != null) {
-          coin = coinPojo.value.coin!;
+        if (coinPojo.value.coin = null) {
+          coin = coinPojo.value.coin;
           update();
         }
         update();
@@ -117,10 +117,10 @@ class BookingController extends GetxController {
 
   void filterStatus(selectedDate) {
     if (selectedDate == "All") {
-      element = bookingPojo.value.slotDetail!;
+      element = bookingPojo.value.slotDetail;
       update();
     } else {
-      var newlist = bookingPojo.value.slotDetail!
+      var newlist = bookingPojo.value.slotDetail
           .where((x) => x.status
           .toString()
           .toLowerCase()
@@ -151,11 +151,11 @@ class BookingController extends GetxController {
 
         CommonDialog.showsnackbar("No Data found");
       } else {
-        bookingPojo.value.slotDetail!.clear();
+        bookingPojo.value.slotDetail.clear();
         update();
         bookingPojo.value = allBookingPojoFromJson(response);
-        if(bookingPojo.value.slotDetail!.isNotEmpty){
-          element=bookingPojo.value.slotDetail!;
+        if(bookingPojo.value.slotDetail.isNotEmpty){
+          element=bookingPojo.value.slotDetail;
         }
         update();
         lodaer = false;
@@ -205,8 +205,8 @@ class BookingController extends GetxController {
       } else {
         CommonDialog.hideLoading();
         bookingPojo.value = allBookingPojoFromJson(response);
-        if(bookingPojo.value.slotDetail!.isNotEmpty){
-          element=bookingPojo.value.slotDetail!;
+        if(bookingPojo.value.slotDetail.isNotEmpty){
+          element=bookingPojo.value.slotDetail;
         }
         update();
         lodaer = false;

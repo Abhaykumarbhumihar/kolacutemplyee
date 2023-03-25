@@ -11,7 +11,7 @@ import '../utils/Utils.dart';
 import 'sidenavigation.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _HomePageState();
@@ -24,7 +24,7 @@ class _HomePageState extends State<ProfilePage> {
   var email="";
   var phone="";
   var iamge="";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   @override
   Widget build(BuildContext context) {
     SharedPreferences.getInstance().then((SharedPreferences sp) {
@@ -34,10 +34,10 @@ class _HomePageState extends State<ProfilePage> {
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
       setState(() {
-        name = _testValue!;
-        email=emailValue!;
-        phone=_phoneValue!;
-        iamge=_imageValue!;
+        name = _testValue;
+        email=emailValue;
+        phone=_phoneValue;
+        iamge=_imageValue;
       });
       // will be null if never previously saved
      // print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -59,7 +59,7 @@ class _HomePageState extends State<ProfilePage> {
               backgroundColor: Color(Utils.hexStringToHexInt('4285F4')),
               leading: InkWell(
                 onTap: (){
-                  scaffolKey.currentState!.openDrawer();
+                  scaffolKey.currentState.openDrawer();
 
                 },
                 child: Icon(
@@ -121,12 +121,12 @@ class _HomePageState extends State<ProfilePage> {
                                 CircleAvatar(
                                   radius: width * 0.2 - width * 0.06,
                                   backgroundImage: NetworkImage(
-                                    profileController.profilePojo.value.data!.image
+                                    profileController.profilePojo.value.data.image
                                         .toString() +
                                         "" !=
                                         ""
                                         ? profileController
-                                        .profilePojo.value.data!.image
+                                        .profilePojo.value.data.image
                                         .toString() +
                                         ""
                                         : "",
@@ -185,12 +185,12 @@ class _HomePageState extends State<ProfilePage> {
                                         width: width * 0.06,
                                       ),
                                       Text(
-                                        profileController.profilePojo.value.data!.name
+                                        profileController.profilePojo.value.data.name
                                             .toString() +
                                             "" !=
                                             ""
                                             ? profileController
-                                            .profilePojo.value.data!.name
+                                            .profilePojo.value.data.name
                                             .toString() +
                                             ""
                                             : "N/A",
@@ -222,12 +222,12 @@ class _HomePageState extends State<ProfilePage> {
                                       ),
                                       Text(
                                         profileController
-                                            .profilePojo.value.data!.email
+                                            .profilePojo.value.data.email
                                             .toString() +
                                             "" !=
                                             ""
                                             ? profileController
-                                            .profilePojo.value.data!.email
+                                            .profilePojo.value.data.email
                                             .toString() +
                                             ""
                                             : "N/A",
@@ -259,12 +259,12 @@ class _HomePageState extends State<ProfilePage> {
                                       ),
                                       Text(
                                         profileController
-                                            .profilePojo.value.data!.phone
+                                            .profilePojo.value.data.phone
                                             .toString() +
                                             "" !=
                                             ""
                                             ? profileController
-                                            .profilePojo.value.data!.phone
+                                            .profilePojo.value.data.phone
                                             .toString() +
                                             ""
                                             : "N/A",
@@ -302,15 +302,15 @@ class _HomePageState extends State<ProfilePage> {
                                             scrollDirection: Axis.vertical,
                                             shrinkWrap: true,
                                             itemCount: profileController.profilePojo
-                                                .value.data!.skills!.length,
+                                                .value.data.skills.length,
                                             itemBuilder: (context, position) {
                                               return Text(
                                                 "  . " +
                                                     profileController
                                                         .profilePojo
                                                         .value
-                                                        .data!
-                                                        .skills![position],
+                                                        .data
+                                                        .skills[position],
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                     color: Color(
@@ -369,7 +369,7 @@ class _HomePageState extends State<ProfilePage> {
                               maxHeight: height * 0.5,
                             ),
                             child: ListView.builder(
-                              itemCount: profileController.feedbackPojo.value.ratingDetail!.length,
+                              itemCount: profileController.feedbackPojo.value.ratingDetail.length,
 
                               itemBuilder: (context,position){
                               return Container(
@@ -379,7 +379,7 @@ class _HomePageState extends State<ProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      '${profileController.feedbackPojo.value.ratingDetail![position].user_name}',
+                                      '${profileController.feedbackPojo.value.ratingDetail[position].user_name}',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: width * 0.03,
@@ -389,7 +389,7 @@ class _HomePageState extends State<ProfilePage> {
                                     Row(
                                       children: <Widget>[
                                         RatingBarIndicator(
-                                          rating: double.parse( "${profileController.feedbackPojo.value.ratingDetail![position].rating}",
+                                          rating: double.parse( "${profileController.feedbackPojo.value.ratingDetail[position].rating}",
                                           ),
                                           itemBuilder: (context, index) => const Icon(
                                             Icons.star,
@@ -400,7 +400,7 @@ class _HomePageState extends State<ProfilePage> {
                                           direction: Axis.horizontal,
                                         ),
                                         Text(
-                                          ' ${profileController.feedbackPojo.value.ratingDetail![position].date}',
+                                          ' ${profileController.feedbackPojo.value.ratingDetail[position].date}',
                                           style: TextStyle(
                                               fontFamily: 'Poppins Regular',
                                               fontSize: width * 0.02,
@@ -413,7 +413,7 @@ class _HomePageState extends State<ProfilePage> {
                                       height: height * 0.01,
                                     ),
                                     AutoSizeText(
-                                      "${profileController.feedbackPojo.value.ratingDetail![position].comment}",
+                                      "${profileController.feedbackPojo.value.ratingDetail[position].comment}",
                                       style: TextStyle(
                                           fontSize: width * 0.02,
                                           color:

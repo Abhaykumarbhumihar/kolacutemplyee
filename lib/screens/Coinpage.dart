@@ -21,7 +21,7 @@ import '../utils/appconstant.dart';
 import 'login.dart';
 
 class CoinPage extends StatefulWidget {
-  const CoinPage({Key? key}) : super(key: key);
+  const CoinPage({Key key}) : super(key: key);
 
   @override
   State<CoinPage> createState() => _CoinPageState();
@@ -30,7 +30,7 @@ class CoinPage extends StatefulWidget {
 class _CoinPageState extends State<CoinPage> {
   var inBedTime;
   var outBedTime;
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   var session;
 
   void _updateLabels(int init, int end, int c) {

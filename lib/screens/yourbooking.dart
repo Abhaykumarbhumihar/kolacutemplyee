@@ -40,7 +40,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
   var email = "";
   var phone = "";
   var iamge = "";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   var focuseddaate = DateTime.now();
 
   @override
@@ -52,10 +52,10 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
       var _imageValue = sharedPreferences.getString("image");
       var _phoneValue = sharedPreferences.getString("phoneno");
       setState(() {
-        name = _testValue!;
-        email = emailValue!;
-        phone = _phoneValue!;
-        iamge = _imageValue!;
+        name = _testValue;
+        email = emailValue;
+        phone = _phoneValue;
+        iamge = _imageValue;
       });
       // will be null if never previously saved
       //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -83,7 +83,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           centerTitle: false,
           leading: InkWell(
             onTap: () {
-              scaffolKey.currentState!.openDrawer();
+              scaffolKey.currentState.openDrawer();
             },
             child: Icon(
               Icons.menu,
@@ -108,7 +108,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           if (leaveapplyController.lodaer) {
             return Container();
           } else {
-            List<Datum>? events = leaveapplyController.data;
+            List<Datum> events = leaveapplyController.data;
             return Container(
               width: width,
               height: height,
@@ -192,7 +192,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                                   datee;
                               //  print(date);
                               var newlist = leaveapplyController
-                                  .leaveApplyPojo.value.data!
+                                  .leaveApplyPojo.value.data
                                   .where((x) => x.calenderDate
                                       .toString()
                                       .toLowerCase()
@@ -230,7 +230,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                               defaultBuilder: (ctx, day, focusedDay) {
                                 int index = 0;
                                 for (var leaveEvent = 0;
-                                    leaveEvent < events!.length;
+                                    leaveEvent < events.length;
                                     leaveEvent++) {
                                   index++;
                                   final DateTime event =
@@ -386,10 +386,10 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           }
         }));
   }
-  Widget recentleavelistbottom(width, height, contet, List<Datum>? data) {
+  Widget recentleavelistbottom(width, height, contet, List<Datum> data) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: data!.length,
+        itemCount: data.length,
         shrinkWrap: true,
         itemBuilder: (context, position) {
           return Container(
@@ -524,7 +524,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                                 //   decoration: BoxDecoration(
                                 //       borderRadius:
                                 //           BorderRadius.circular(width * 0.04),
-                                //       color: data![position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
+                                //       color: data[position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
                                 // )
                               ],
                             ),
@@ -539,10 +539,10 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
           );
         });
   }
-  Widget recentleavelist(width, height, contet, List<Datum>? data) {
+  Widget recentleavelist(width, height, contet, List<Datum> data) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: data!.length,
+        itemCount: data.length,
         shrinkWrap: true,
         itemBuilder: (context, position) {
           return Container(
@@ -683,7 +683,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
                                 //   decoration: BoxDecoration(
                                 //       borderRadius:
                                 //           BorderRadius.circular(width * 0.04),
-                                //       color: data![position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
+                                //       color: data[position].holidayType=="Fully off"?Colors.cyan:Colors.orange,)
                                 // )
                               ],
                             ),

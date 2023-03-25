@@ -9,7 +9,7 @@ import '../utils/CommomDialog.dart';
 import '../utils/Utils.dart';
 
 class ApplyLeave extends StatefulWidget {
-  const ApplyLeave({Key? key}) : super(key: key);
+  const ApplyLeave({Key key}) : super(key: key);
 
   @override
   State<ApplyLeave> createState() => _ApplyLeaveState();
@@ -19,12 +19,12 @@ class FruitsList {
   String name;
   int index;
 
-  FruitsList({required this.name, required this.index});
+  FruitsList({ this.name,  this.index});
 }
 
 class _ApplyLeaveState extends State<ApplyLeave> {
   LeaveApplyController leaveapplyController = Get.put(LeaveApplyController());
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   bool holidaytype = false;
   bool _value = false;
   int val = -1;
@@ -414,7 +414,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
   }
 
   _selectTime(BuildContext context) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
+    final TimeOfDay timeOfDay = await showTimePicker(
       context: context,
       initialTime: openingTime,
       initialEntryMode: TimePickerEntryMode.dial,
@@ -434,7 +434,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
   }
 
   _closingTime(BuildContext context) async {
-    final TimeOfDay? timeOfDay = await showTimePicker(
+    final TimeOfDay timeOfDay = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.dial,
@@ -484,7 +484,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
         var _testValue = sharedPreferences.getString("session");
         // will be null if never previously saved
         setState(() {
-          sessio = _testValue!;
+          sessio = _testValue;
         });
         print("ABHAY ABHAY ABHYA ABHYA ABHAY  " + "${sessio}");
         leaveapplyController.applyLeave(

@@ -36,7 +36,7 @@ class AuthController extends GetxController {
   // device_type:android
 
   void login(email, password) async {
-    String? fcm_token = await FirebaseMessaging.instance.getToken();
+    String fcm_token = await FirebaseMessaging.instance.getToken();
 
     Map map;
     map = {
@@ -55,11 +55,11 @@ class AuthController extends GetxController {
         {
           loginPojo.value = loginPojoFromJson(response);
           final SharedPreferences prefs = await _prefs;
-          await prefs.setString('session', loginPojo.value.data!.token.toString());
-          await prefs.setString('name', loginPojo.value.data!.name.toString());
-          await prefs.setString('email', loginPojo.value.data!.email.toString());
-          await prefs.setString('phoneno', loginPojo.value.data!.phone.toString());
-          await prefs.setString('image', loginPojo.value.data!.image.toString());
+          await prefs.setString('session', loginPojo.value.data.token.toString());
+          await prefs.setString('name', loginPojo.value.data.name.toString());
+          await prefs.setString('email', loginPojo.value.data.email.toString());
+          await prefs.setString('phoneno', loginPojo.value.data.phone.toString());
+          await prefs.setString('image', loginPojo.value.data.image.toString());
           Get.off(HomeBottomBar());
         }else{
         CommonDialog.showsnackbar(body["message"]);

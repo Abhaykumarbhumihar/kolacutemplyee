@@ -10,11 +10,11 @@ import '../utils/appconstant.dart';
 
 class LeaveApplyController extends GetxController {
   var leaveApplyPojo = LeaveApplyPojo().obs;
-  List<Datum>? data = [];
+  List<Datum> data = [];
   var applyLeavePojo = ApplyLeavePojo().obs;
   var lodaer = true;
   var sessionId = "".obs;
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
 
   @override
   void onInit() {
@@ -51,16 +51,16 @@ class LeaveApplyController extends GetxController {
   void getData() async {
     final prefs = await SharedPreferences.getInstance();
     var session = prefs.getString('session');
-    sessionId.value = session!;
+    sessionId.value = session;
     update();
   }
 
   void filterStatus(selectedDate) {
     if (selectedDate == "All") {
-      data = leaveApplyPojo.value.data!;
+      data = leaveApplyPojo.value.data;
       update();
     } else {
-      var newlist = leaveApplyPojo.value.data!
+      var newlist = leaveApplyPojo.value.data
           .where((x) => x.holidayType
               .toString()
               .toLowerCase()
@@ -124,8 +124,8 @@ class LeaveApplyController extends GetxController {
       print(response);
       CommonDialog.hideLoading();
       leaveApplyPojo.value = leaveApplyPojoFromJson(response);
-      if (leaveApplyPojo.value.data!.isNotEmpty) {
-        data = leaveApplyPojo.value.data!;
+      if (leaveApplyPojo.value.data.isNotEmpty) {
+        data = leaveApplyPojo.value.data;
         update();
       }
       if (leaveApplyPojo.value.message == "No Data found") {
@@ -158,8 +158,8 @@ class LeaveApplyController extends GetxController {
       print(response);
       CommonDialog.hideLoading();
       leaveApplyPojo.value = leaveApplyPojoFromJson(response);
-      if (leaveApplyPojo.value.data!.isNotEmpty) {
-        data = leaveApplyPojo.value.data!;
+      if (leaveApplyPojo.value.data.isNotEmpty) {
+        data = leaveApplyPojo.value.data;
         update();
       }
       if (leaveApplyPojo.value.message == "No Data found") {

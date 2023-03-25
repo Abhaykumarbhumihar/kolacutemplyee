@@ -15,7 +15,7 @@ import 'profile.dart';
 import 'yourbooking.dart';
 
 class HomeBottomBar extends StatefulWidget {
-  const HomeBottomBar({Key? key}) : super(key: key);
+  const HomeBottomBar({Key key}) : super(key: key);
 
   @override
   State<HomeBottomBar> createState() => _HomeBottomBarState();
@@ -24,7 +24,7 @@ class HomeBottomBar extends StatefulWidget {
 class _HomeBottomBarState extends State<HomeBottomBar> {
   var index = 0;
   var image="";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
 
   final PersistentTabController _controller =
   PersistentTabController(initialIndex: 0);
@@ -132,14 +132,14 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
         alert: true, badge: true, sound: true);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification.android;
       print(  message.data["we"]);
       print("54566565565656565556 ----UNONPE UNONPE ");
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
-            notification.title! + "789",
+            notification.title + "789",
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(
@@ -157,15 +157,15 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification.android;
       print(  message.data["we"]);
       print(
           "UNONPE  UNONPE  UNONPE  UNONPE UNONPE UNONPE UNONPE ----UNONPE UNONPE ");
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
-            notification.title! + "onMessageOpenedApp",
+            notification.title + "onMessageOpenedApp",
             notification.body,
             NotificationDetails(
               android: AndroidNotificationDetails(

@@ -13,7 +13,7 @@ class ProfileController extends GetxController {
   var profilePojo = ProfilePojo().obs;
   var feedbackPojo=FeedbackPojo().obs;
   var lodaer = true;
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
 
     var session = prefs.getString('session');
-    sessionId.value=session!;
+    sessionId.value=session;
     update();
   }
 

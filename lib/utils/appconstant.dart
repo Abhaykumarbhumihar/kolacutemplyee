@@ -1,5 +1,5 @@
  class AppConstant{
-   static const String BASE_URL = "http://kolacut.kvpscampuscare.com/";
+   static const String BASE_URL = "https://kolacut.com/";
    static const String SEND_OTP="public/api/login";
    static const String VERIFY_OTP="public/api/verify-otp";
    static const String LOGIN="public/api/employee-login";

@@ -15,9 +15,9 @@ class Dashboardpojo {
     this.data,
   });
 
-  int? status;
-  String? message;
-  List<Datum>? data;
+  int status;
+  String message;
+  List<Datum> data;
 
   factory Dashboardpojo.fromJson(Map<String, dynamic> json) => Dashboardpojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class Dashboardpojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
   };
 }
 
@@ -40,10 +40,10 @@ class Datum {
     this.monthlyEarning,
   });
 
-  int? orderReceved;
-  int? completedOrder;
-  int? totalEarnings;
-  int? monthlyEarning;
+  int orderReceved;
+  int completedOrder;
+  int totalEarnings;
+  int monthlyEarning;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     orderReceved: json["order_receved"],

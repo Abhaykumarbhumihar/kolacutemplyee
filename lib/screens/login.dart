@@ -14,7 +14,7 @@ import '../utils/appconstant.dart';
 import 'homebottombar.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -22,7 +22,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   AuthController _authController = Get.put(AuthController());
-  late TextEditingController emailcontroller, passwontroller;
+   TextEditingController emailcontroller, passwontroller;
   TextEditingController _textFieldControllerupdateABout =
   TextEditingController();
   @override
@@ -236,12 +236,13 @@ class _LoginPageState extends State<LoginPage> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      FlatButton(
-                                        padding: EdgeInsets.all(6.0),
-                                        color: Color(Utils.hexStringToHexInt('4285F4')),
-                                        textColor:
-                                        Colors.white,
-                                        child: Text('OK'),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          padding: EdgeInsets.all(6.0),
+                                          backgroundColor: Color(Utils.hexStringToHexInt('4285F4')),
+                                        ),
+
+                                        child: Text('OK',style: TextStyle(color: Colors.white, ),),
                                         onPressed:
                                             () async {
 

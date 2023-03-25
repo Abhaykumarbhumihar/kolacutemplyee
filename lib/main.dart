@@ -16,7 +16,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-late FirebaseMessaging _firebaseMessaging;
+ FirebaseMessaging _firebaseMessaging;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
@@ -58,9 +58,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  final String? session = prefs.getString('session');
+  final String session = prefs.getString('session');
   await Firebase.initializeApp();
-  String? fcm_token = await FirebaseMessaging.instance.getToken();
+  String fcm_token = await FirebaseMessaging.instance.getToken();
   print(fcm_token);
   debugPrint(fcm_token);
   await flutterLocalNotificationsPlugin
@@ -151,8 +151,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, this.session}) : super(key: key);
-  final String? session;
+  const MyApp({Key key, this.session}) : super(key: key);
+  final String session;
 
 
   @override

@@ -15,9 +15,9 @@ class ProfilePojo {
     this.data,
   });
 
-  int? status;
-  String? message;
-  Data? data;
+  int status;
+  String message;
+  Data data;
 
   factory ProfilePojo.fromJson(Map<String, dynamic> json) => ProfilePojo(
     status: json["status"],
@@ -28,7 +28,7 @@ class ProfilePojo {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "data": data!.toJson(),
+    "data": data.toJson(),
   };
 }
 
@@ -44,14 +44,14 @@ class Data {
     this.leaveManagement,
   });
 
-  int? id;
-  String? name;
-  String? email;
-  String? phone;
-  String? image;
-  List<String>? skills;
-  String? address;
-  List<LeaveManagement>? leaveManagement;
+  int id;
+  String name;
+  String email;
+  String phone;
+  String image;
+  List<String> skills;
+  String address;
+  List<LeaveManagement> leaveManagement;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
@@ -70,9 +70,9 @@ class Data {
     "email": email,
     "phone": phone,
     "image": image,
-    "skills": List<dynamic>.from(skills!.map((x) => x)),
+    "skills": List<dynamic>.from(skills.map((x) => x)),
     "address": address,
-    "leave_management": List<dynamic>.from(leaveManagement!.map((x) => x.toJson())),
+    "leave_management": List<dynamic>.from(leaveManagement.map((x) => x.toJson())),
   };
 }
 
@@ -83,9 +83,9 @@ class LeaveManagement {
     this.holidayReason,
   });
 
-  String? leaveDate;
-  String? holidayType;
-  String? holidayReason;
+  String leaveDate;
+  String holidayType;
+  String holidayReason;
 
   factory LeaveManagement.fromJson(Map<String, dynamic> json) => LeaveManagement(
     leaveDate: json["leave_date"],

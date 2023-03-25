@@ -8,7 +8,7 @@ import '../model/LeaveApplyPojo.dart';
 import '../model/LeaveModel.dart';
 
 class MyData extends StatefulWidget {
-  const MyData({Key? key}) : super(key: key);
+  const MyData({Key key}) : super(key: key);
 
   @override
   State<MyData> createState() => _MyDataState();
@@ -44,7 +44,7 @@ class _MyDataState extends State<MyData> {
         if (leaveapplyController.lodaer) {
           return Container();
         } else {
-          List<Datum>? events = leaveapplyController.leaveApplyPojo.value!.data;
+          List<Datum> events = leaveapplyController.leaveApplyPojo.value.data;
           return
             Padding(
             padding: const EdgeInsets.all(20.0),
@@ -67,7 +67,7 @@ class _MyDataState extends State<MyData> {
                   defaultBuilder: (ctx, day, focusedDay) {
                     int index = 0;
                     for (var leaveEvent = 0;
-                        leaveEvent < events!.length;
+                        leaveEvent < events.length;
                         leaveEvent++) {
                       index++;
                       final DateTime event = _stringToDateTimeObject(

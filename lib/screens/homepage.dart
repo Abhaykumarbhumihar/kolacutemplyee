@@ -19,7 +19,7 @@ import 'allbooking.dart';
 import 'sidenavigation.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   var email="";
   var phone="";
   var iamge="";
-  late SharedPreferences sharedPreferences;
+   SharedPreferences sharedPreferences;
   var session="";
 
 
@@ -47,11 +47,11 @@ class _HomePageState extends State<HomePage> {
       var _phoneValue = sharedPreferences.getString("phoneno");
       var _session = sharedPreferences.getString('session');
       setState(() {
-        name = _testValue!;
-        email=emailValue!;
-        phone=_phoneValue!;
-        iamge=_imageValue!;
-        session=_session!;
+        name = _testValue;
+        email=emailValue;
+        phone=_phoneValue;
+        iamge=_imageValue;
+        session=_session;
       });
       // will be null if never previously saved
     //  print("SDFKLDFKDKLFKDLFKLDFKL  " + "${_testValue}");
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             leading: InkWell(
               onTap: () {
-                scaffolKey.currentState!.openDrawer();
+                scaffolKey.currentState.openDrawer();
               },
               child: Icon(
                 Icons.menu,
@@ -294,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                                     Positioned(
                                       top: height * 0.01,
                                       child: Text(
-                                        '₹ ${bookingController.dashboardData.value.data![0].totalEarnings}',
+                                        '₹ ${bookingController.dashboardData.value.data[0].totalEarnings}',
                                         style: TextStyle(
                                             fontFamily: 'Poppins Semibold',
                                             fontSize: MediaQuery.of(context)
@@ -345,15 +345,15 @@ class _HomePageState extends State<HomePage> {
                         elements: _element,
                         order: StickyGroupedListOrder.ASC,
                         groupBy: (SlotDetail element) => DateTime(
-                          element.date!.year,
-                          element.date!.month,
-                          element.date!.day,
+                          element.date.year,
+                          element.date.month,
+                          element.date.day,
                         ),
                         groupComparator: (DateTime value1, DateTime value2) =>
                             value2.compareTo(value1),
                         itemComparator:
                             (SlotDetail element1, SlotDetail element2) =>
-                                element1.date!.compareTo(element2.date!),
+                                element1.date.compareTo(element2.date),
                         floatingHeader: false,
                         groupSeparatorBuilder: _getGroupSeparator,
                         itemBuilder: _getItem,
@@ -515,7 +515,7 @@ class _HomePageState extends State<HomePage> {
     var height = MediaQuery.of(context).size.height;
 
     List<String> serviceName = [];
-    element.service!.forEach((element) {
+    element.service.forEach((element) {
       serviceName.add(element.name.toString());
     });
 
@@ -613,7 +613,7 @@ class _HomePageState extends State<HomePage> {
                                     fontSize: width * 0.03),
                               ),
                               Text(
-                                  "${element.date!.day}-${element.date!.month}-${element.date!.year}",
+                                  "${element.date.day}-${element.date.month}-${element.date.year}",
                                   style: TextStyle(
                                       fontFamily: 'Poppins Regular',
                                       color: Color(
@@ -703,7 +703,7 @@ class _HomePageState extends State<HomePage> {
                           LimitedBox(
                             maxHeight: height * 0.3,
                             child: ListView.builder(
-                                itemCount: element.service!.length,
+                                itemCount: element.service.length,
                                 itemBuilder: (context, position) {
                                   return Container(
                                     height: height * 0.03,
@@ -721,13 +721,13 @@ class _HomePageState extends State<HomePage> {
                                             CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                "${element.service![position].name}",
+                                                "${element.service[position].name}",
                                                 style: TextStyle(fontSize: 8.0),
                                               ),
                                             ],
                                           ),
                                           Text(
-                                            "${element.service![position].price}",
+                                            "${element.service[position].price}",
                                             style: TextStyle(fontSize: 8.0),
                                           )
                                         ],
@@ -832,9 +832,9 @@ class _HomePageState extends State<HomePage> {
                           //         if (body['message'] ==
                           //             "Booking has been accepted successfully.") {
                           //           setState(() {
-                          //             bookingController.slotDetail!.clear();
+                          //             bookingController.slotDetail.clear();
                           //             bookingController
-                          //                 .bookingPojo.value.slotDetail!
+                          //                 .bookingPojo.value.slotDetail
                           //                 .clear();
                           //
                           //             bookingController.getBookingList();
@@ -884,9 +884,9 @@ class _HomePageState extends State<HomePage> {
                           //         if (body['message'] ==
                           //             "Booking has been completed successfully.") {
                           //           setState(() {
-                          //             bookingController.slotDetail!.clear();
+                          //             bookingController.slotDetail.clear();
                           //             bookingController
-                          //                 .bookingPojo.value.slotDetail!
+                          //                 .bookingPojo.value.slotDetail
                           //                 .clear();
                           //             bookingController.getBookingList();
                           //           });
@@ -935,7 +935,7 @@ class _HomePageState extends State<HomePage> {
                                 setState(() {
                                   bookingController.element.clear();
                                   bookingController
-                                      .bookingPojo.value.slotDetail!
+                                      .bookingPojo.value.slotDetail
                                       .clear();
                                   bookingController.getBookingList(session);
                                 });
@@ -985,7 +985,7 @@ class _HomePageState extends State<HomePage> {
                                   bookingController.element
                                       .clear();
                                   bookingController
-                                      .bookingPojo.value.slotDetail!
+                                      .bookingPojo.value.slotDetail
                                       .clear();
 
                                   bookingController.getBookingList(session);

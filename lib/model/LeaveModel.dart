@@ -1,7 +1,7 @@
 class LeaveModel {
-  int? status;
-  String? message;
-  List<LeaveData>? data;
+  int status;
+  String message;
+  List<LeaveData> data;
 
   LeaveModel(this.status, this.message, this.data);
 
@@ -11,7 +11,7 @@ class LeaveModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data?.add(LeaveData.fromJson(v));
+        data.add(LeaveData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class LeaveModel {
     map['status'] = status;
     map['message'] = message;
     if (data != null) {
-      map['data'] = data?.map((v) => v.toJson()).toList();
+      map['data'] = data.map((v) => v.toJson()).toList();
     }
     return map;
   }
@@ -67,20 +67,20 @@ class LeaveModel {
 }
 
 class LeaveData {
-  String? leaveDate;
-  String? holidayType;
-  String? holidayReason;
-  String? startFrom;
-  String? endFrom;
-  String? calenderDate;
+  String leaveDate;
+  String holidayType;
+  String holidayReason;
+  String startFrom;
+  String endFrom;
+  String calenderDate;
 
   LeaveData(
-      {required this.leaveDate,
-        required this.holidayType,
-        required this.holidayReason,
-        required this.startFrom,
-        required this.endFrom,
-        required this.calenderDate});
+      { this.leaveDate,
+         this.holidayType,
+         this.holidayReason,
+         this.startFrom,
+         this.endFrom,
+         this.calenderDate});
 
   LeaveData.fromJson(dynamic json) {
     leaveDate = json['leave_date'];
